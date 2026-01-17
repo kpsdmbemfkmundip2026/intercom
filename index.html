@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Intercom - BEM FKM UNDIP 2026</title>
+    
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        @keyframes blob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+        
+        .glass-card, .glass-button, .glass-item, .glass-input {
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+                        inset 0 -1px 0 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .glass-selected {
+            box-shadow: 0 20px 40px 0 rgba(59, 130, 246, 0.4),
+                        0 0 0 1px rgba(255, 255, 255, 0.3),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { 
+            background: rgba(255, 255, 255, 0.3); 
+            border-radius: 10px; 
+            backdrop-filter: blur(10px);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6); 
+            border-radius: 10px; 
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        body { background: #f8fafc; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useMemo } = React;
+        const { Search, Send, Copy, Check, MessageSquare } = lucide;
+
+        const App = () => {
+            const [selectedPJ, setSelectedPJ] = useState('');
+            const [selectedContact, setSelectedContact] = useState(null);
+            const [timeOfDay, setTimeOfDay] = useState('pagi');
+            const [message, setMessage] = useState('');
+            const [copied, setCopied] = useState(false);
+            const [searchTerm, setSearchTerm] = useState('');
+
+            const contactData = {
+                'Evan': [
+                    { unit: 'BEM FKM', phone: '082116796008', name: 'Fikhar', position: 'Ketua BEM FKM' },
+                    { unit: 'HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '089539714502', name: 'Ilham', position: 'Ketua Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN PPI HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '08111286442', name: 'Jey', position: 'Ketua Departemen PPI Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN PI HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '082137753469', name: 'Farah', position: 'Ketua Departemen PI Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN KESEHATAN LINGKUNGAN', phone: '081393409708', name: 'Maharani', position: 'Peminatan Kesehatan Lingkungan' },
+                    { unit: 'BIRO KMI BEM FKM', phone: '08117671202', name: 'Alifah', position: 'Ketua Biro KMI BEM FKM' },
+                    { unit: 'BIDANG K&PENGMAS BEM FKM', phone: '08112618995', name: 'Deny', position: 'Ketua Bidang K&PENGMAS BEM FKM' }
+                ],
+                'Jeo': [
+                    { unit: 'PSM FKM', phone: '08121411801', name: 'Karen', position: 'PSM FKM' },
+                    { unit: 'DEPARTEMEN KEILMUAN HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '085769569991', name: 'Syakira', position: 'Ketua Departemen Keilmuan Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN MEDINFO HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '081325740363', name: 'Fibri', position: 'Ketua Departemen Medinfo Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN K3', phone: '087722460391', name: 'Husain', position: 'Peminatan K3' },
+                    { unit: 'BIRO ADMIN BEM FKM', phone: '081332334398', name: 'Milda', position: 'Ketua Biro Admin BEM FKM' },
+                    { unit: 'BIDANG MIKAT BEM FKM', phone: '088215109680', name: 'Jihan', position: 'Ketua Bidang MIKAT BEM FKM' }
+                ],
+                'Lily': [
+                    { unit: 'PIRC', phone: '089536334701', name: 'Amanda', position: 'PIRC' },
+                    { unit: 'SPORTYCA', phone: '085212367554', name: 'Cornelia', position: 'Sportyca' },
+                    { unit: 'DEPARTEMEN KEMAHASISWAAN HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '087738831766', name: 'Kinan', position: 'Ketua Departemen Kemahasiswaan Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN PSDM HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '081390240726', name: 'Shifa', position: 'Ketua Departemen PSDM Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN EPIDEMIOLOGI', phone: '089521897115', name: 'Salwa Audrie', position: 'Peminatan Epidemiologi' },
+                    { unit: 'PEMINATAN ENTOMOLOGI', phone: '085718921051', name: 'Surya Natanegara', position: 'Peminatan Entomologi' },
+                    { unit: 'BIDANG RISKEL BEM FKM', phone: '085877335371', name: 'Maulida', position: 'Ketua Bidang RISKEL BEM FKM' },
+                    { unit: 'BIDANG EKOTIF BEM FKM', phone: '089669129858', name: 'Darin', position: 'Ketua Bidang EKOTIF BEM FKM' }
+                ],
+                'Wawa': [
+                    { unit: 'SENAT MAHASISWA FKM', phone: '082110063943', name: 'Naila', position: 'Senat Mahasiswa FKM' },
+                    { unit: 'DEPARTEMEN PSDM HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '087782951049', name: 'Arina', position: 'Ketua Departemen PSDM Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN TIPEMU HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '085271024742', name: 'Ruth', position: 'Ketua Departemen TIPEMU Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN PKIP', phone: '087839475453', name: 'Rayung', position: 'Peminatan PKIP' },
+                    { unit: 'KOMTING 2025', phone: '081918481223', name: 'Ghifari', position: 'Komting 2025' },
+                    { unit: 'BIDANG SOSPOL BEM FKM', phone: '087885156165', name: 'Ghani', position: 'Ketua Bidang SOSPOL BEM FKM' },
+                    { unit: 'BIDANG HARKAM BEM FKM', phone: '082134809481', name: 'Daffa', position: 'Ketua Bidang HARKAM BEM FKM' }
+                ],
+                'Aru': [
+                    { unit: 'STOPHIVA', phone: '085225414582', name: 'Nurul Izzah', position: 'StopHIVa' },
+                    { unit: 'STUDIO8', phone: '087889808483', name: 'Sera', position: 'Studio8' },
+                    { unit: 'DEPARTEMEN KMI HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '085712724984', name: 'Dita', position: 'Ketua Departemen KMI Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN PENGMAS HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '085210586748', name: 'Alma', position: 'Ketua Departemen Pengmas Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN AKK', phone: '08113978978', name: 'Nazwa', position: 'Peminatan AK
