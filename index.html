@@ -1,255 +1,434 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WEBSITE INTERCOM BIDANG K&PSDM</title>
-    
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Intercom App — index.html</title>
+
+  <!-- Tailwind Play CDN for quick styling (suitable for prototype / GitHub Pages) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slide-left {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .animate-fade-in { animation: fade-in 0.6s ease-out; }
+    .animate-slide-up { animation: slide-up 0.4s ease-out; }
+    .animate-slide-left { animation: slide-left 0.5s ease-out; }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    pre { white-space: pre-wrap; }
+  </style>
 </head>
-<body>
-    <div id="root"></div>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-4 md:p-8">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-12 animate-fade-in">
+      <div class="flex items-center justify-center gap-6 mb-4">
+        <!-- Gambar header: menggunakan Imgur direct link -->
+        <img id="headerImage"
+             class="w-20 h-20 rounded-full animate-float"
+             src="https://i.imgur.com/7cvCZVb.png"
+             alt="Logo" loading="lazy" />
+        <div class="text-left">
+          <h1 class="text-2xl font-bold">Intercom K&PSDM — BEM FKM Undip 2026</h1>
+          <p class="text-sm text-purple-300">Kirim pesan WhatsApp cepat dan terformat</p>
+        </div>
+      </div>
+    </div>
 
-    <script type="text/babel">
-        const { useState, useMemo, useEffect } = React;
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Left Panel - Input Form -->
+      <div class="space-y-6">
+        <!-- Select Staff -->
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 shadow-xl hover:shadow-purple-500/20 transition-all duration-300">
+          <label class="flex items-center gap-2 text-lg font-semibold mb-3 text-purple-300">
+            <!-- simple inline user icon -->
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 21v-2a4 4 0 00-3-3.87M4 21v-2a4 4 0 013-3.87M16 3.13a4 4 0 010 7.75M8 3.13a4 4 0 010 7.75"></path></svg>
+            Pengirim
+          </label>
+          <select id="staffSelect" class="w-full bg-slate-800/50 border border-purple-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all">
+            <option value="">-- Pilih Staff --</option>
+          </select>
+        </div>
 
-        // Komponen Icon agar sama dengan desain kodingan asli kamu
-        const LucideIcon = ({ name, className }) => {
-            const [iconHtml, setIconHtml] = useState('');
-            useEffect(() => {
-                if (window.lucide) {
-                    const icon = window.lucide.icons[name];
-                    if (icon) {
-                        const svg = window.lucide.createSvg(icon, { 
-                            class: className,
-                            'stroke-width': 2
-                        });
-                        setIconHtml(svg);
-                    }
-                }
-            }, [name, className]);
-            return <span className="inline-flex" dangerouslySetInnerHTML={{ __html: iconHtml }} />;
-        };
+        <!-- Search Box -->
+        <div id="searchBlock" class="hidden bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 shadow-xl animate-slide-up">
+          <label class="flex items-center gap-2 text-lg font-semibold mb-3 text-purple-300">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21l-4.35-4.35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Cari Kontak
+          </label>
+          <input id="searchInput" type="text" placeholder="Cari nama atau unit..." class="w-full bg-slate-800/50 border border-purple-500/50 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" />
+        </div>
 
-        const App = () => {
-            const [selectedPJ, setSelectedPJ] = useState('');
-            const [selectedContact, setSelectedContact] = useState(null);
-            const [timeOfDay, setTimeOfDay] = useState('pagi');
-            const [message, setMessage] = useState('');
-            const [copied, setCopied] = useState(false);
-            const [searchTerm, setSearchTerm] = useState('');
+        <!-- Contact List -->
+        <div id="contactsBlock" class="hidden bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 shadow-xl max-h-96 overflow-y-auto animate-slide-up">
+          <h3 class="text-lg font-semibold mb-4 text-purple-300">Pilih Penerima</h3>
+          <div id="contactsList" class="space-y-2"></div>
+        </div>
 
-            // Data kontak asli sesuai kodingan kamu
-            const contactData = {
-                'Evan': [
-                    { unit: 'BEM FKM', phone: '082116796008', name: 'Fikhar', position: 'Ketua BEM FKM' },
-                    { unit: 'HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '089539714502', name: 'Ilham', position: 'Ketua Himpunan Mahasiswa Kesehatan Masyarakat' },
-                    { unit: 'DEPARTEMEN PPI HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '08111286442', name: 'Jey', position: 'Ketua Departemen PPI Himpunan Mahasiswa Kesehatan Masyarakat' },
-                    { unit: 'DEPARTEMEN PI HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '082137753469', name: 'Farah', position: 'Ketua Departemen PI Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
-                    { unit: 'PEMINATAN KESEHATAN LINGKUNGAN', phone: '081393409708', name: 'Maharani', position: 'Peminatan Kesehatan Lingkungan' },
-                    { unit: 'BIRO KMI BEM FKM', phone: '08117671202', name: 'Alifah', position: 'Ketua Biro KMI BEM FKM' },
-                    { unit: 'BIDANG K&PENGMAS BEM FKM', phone: '08112618995', name: 'Deny', position: 'Ketua Bidang K&PENGMAS BEM FKM' }
-                ],
-                'Jeo': [
-                    { unit: 'PSM FKM', phone: '08121411801', name: 'Karen', position: 'PSM FKM' },
-                    { unit: 'DEPARTEMEN KEILMUAN HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '085769569991', name: 'Syakira', position: 'Ketua Departemen Keilmuan Himpunan Mahasiswa Kesehatan Masyarakat' },
-                    { unit: 'DEPARTEMEN MEDINFO HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '081325740363', name: 'Fibri', position: 'Ketua Departemen Medinfo Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
-                    { unit: 'PEMINATAN K3', phone: '087722460391', name: 'Husain', position: 'Peminatan K3' },
-                    { unit: 'BIRO ADMIN BEM FKM', phone: '081332334398', name: 'Milda', position: 'Ketua Biro Admin BEM FKM' },
-                    { unit: 'BIDANG MIKAT BEM FKM', phone: '088215109680', name: 'Jihan', position: 'Ketua Bidang MIKAT BEM FKM' }
-                ],
-                'Lily': [
-                    { unit: 'PIRC', phone: '089536334701', name: 'Amanda', position: 'PIRC' },
-                    { unit: 'SPORTYCA', phone: '085212367554', name: 'Cornelia', position: 'Sportyca' },
-                    { unit: 'DEPARTEMEN KEMAHASISWAAN HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '087738831766', name: 'Kinan', position: 'Ketua Departemen Kemahasiswaan Himpunan Mahasiswa Kesehatan Masyarakat' },
-                    { unit: 'DEPARTEMEN PSDM HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '081390240726', name: 'Shifa', position: 'Ketua Departemen PSDM Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
-                    { unit: 'PEMINATAN EPIDEMIOLOGI', phone: '089521897115', name: 'Salwa Audrie', position: 'Peminatan Epidemiologi' },
-                    { unit: 'PEMINATAN ENTOMOLOGI', phone: '085718921051', name: 'Surya Natanegara', position: 'Peminatan Entomologi' },
-                    { unit: 'BIDANG RISKEL BEM FKM', phone: '085877335371', name: 'Maulida', position: 'Ketua Bidang RISKEL BEM FKM' },
-                    { unit: 'BIDANG EKOTIF BEM FKM', phone: '089669129858', name: 'Darin', position: 'Ketua Bidang EKOTIF BEM FKM' }
-                ],
-                'Wawa': [
-                    { unit: 'SENAT MAHASISWA FKM', phone: '082110063943', name: 'Naila', position: 'Senat Mahasiswa FKM' },
-                    { unit: 'DEPARTEMEN PSDM HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '087782951049', name: 'Arina', position: 'Ketua Departemen PSDM Himpunan Mahasiswa Kesehatan Masyarakat' },
-                    { unit: 'DEPARTEMEN TIPEMU HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '085271024742', name: 'Ruth', position: 'Ketua Departemen TIPEMU Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
-                    { unit: 'PEMINATAN PKIP', phone: '087839475453', name: 'Rayung', position: 'Peminatan PKIP' },
-                    { unit: 'KOMTING 2025', phone: '081918481223', name: 'Ghifari', position: 'Komting 2025' },
-                    { unit: 'BIDANG SOSPOL BEM FKM', phone: '087885156165', name: 'Ghani', position: 'Ketua Bidang SOSPOL BEM FKM' },
-                    { unit: 'BIDANG HARKAM BEM FKM', phone: '082134809481', name: 'Daffa', position: 'Ketua Bidang HARKAM BEM FKM' }
-                ],
-                'Aru': [
-                    { unit: 'STOPHIVA', phone: '085225414582', name: 'Nurul Izzah', position: 'StopHIVa' },
-                    { unit: 'STUDIO8', phone: '087889808483', name: 'Sera', position: 'Studio8' },
-                    { unit: 'DEPARTEMEN KMI HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '085712724984', name: 'Dita', position: 'Ketua Departemen KMI Himpunan Mahasiswa Kesehatan Masyarakat' },
-                    { unit: 'DEPARTEMEN PENGMAS HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '085210586748', name: 'Alma', position: 'Ketua Departemen Pengmas Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
-                    { unit: 'PEMINATAN AKK', phone: '08113978978', name: 'Nazwa', position: 'Peminatan AKK' },
-                    { unit: 'BIDANG KESTRA BEM FKM', phone: '081229801055', name: 'Bima', position: 'Ketua Bidang KESTRA BEM FKM' }
-                ],
-                'Faiza': [
-                    { unit: 'HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '085884781730', name: 'Andi', position: 'Ketua Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
-                    { unit: 'DEPARTEMEN SOSMAS HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '087810076394', name: 'Deswita', position: 'Ketua Departemen Sosmas Himpunan Mahasiswa Kesehatan Masyarakat' },
-                    { unit: 'DEPARTEMEN SENIORA HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '089601418488', name: 'Winda', position: 'Ketua Departemen Seniora Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
-                    { unit: 'PEMINATAN GIZI KESEHATAN MASYARAKAT', phone: '085716738931', name: 'Syahfitri', position: 'Peminatan Gizi Kesehatan Masyarakat' },
-                    { unit: 'BIDANG POKJA ISMKMI BEM FKM', phone: '081297220219', name: 'Mutia', position: 'Ketua Bidang POKJA ISMKMI BEM FKM' }
-                ],
-                'Ian': [
-                    { unit: 'KSR', phone: '085727583052', name: 'Dinda', position: 'KSR' },
-                    { unit: 'DEPARTEMEN SENIORA HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '081918431357', name: 'Talitha', position: 'Ketua Departemen Seni dan Olahraga Himpunan Mahasiswa Kesehatan Masyarakat' },
-                    { unit: 'DEPARTEMEN NOTIF HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '081932371915', name: 'Grinna', position: 'Ketua Departemen NOTIF Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
-                    { unit: 'PEMINATAN BIOSTATISTIKA DAN KEPENDUDUKAN', phone: '088225234055', name: 'Taat Wigati', position: 'Peminatan Biostatistika dan Kependudukan' },
-                    { unit: 'BIDANG CED BEM FKM', phone: '089980232596', name: 'Sulthon', position: 'Ketua Bidang CED BEM FKM' }
-                ],
-                'Kattari': [
-                    { unit: 'DEPARTEMEN KEWIRAUSAHAAN HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '085713187074', name: 'Muna', position: 'Ketua Departemen Kewirausahaan Himpunan Mahasiswa Kesehatan Masyarakat' },
-                    { unit: 'DEPARTEMEN PENWA HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '082138316959', name: 'Zahirah', position: 'Ketua Departemen PENWA Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
-                    { unit: 'KOMTING 2023', phone: '085881797522', name: 'Grestine', position: 'Komting 2023' },
-                    { unit: 'KOMTING 2024', phone: '085695572360', name: 'Andreas', position: 'Komting 2024' },
-                    { unit: 'BIDANG KESMA BEM FKM', phone: '081228935025', name: 'Neibila', position: 'Ketua Bidang KESMA BEM FKM' }
-                ]
-            };
+        <!-- Time Selection -->
+        <div id="waktuBlock" class="hidden bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 shadow-xl animate-slide-up">
+          <label class="flex items-center gap-2 text-lg font-semibold mb-3 text-purple-300">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Pilih Waktu Pengiriman
+          </label>
+          <div id="waktuButtons" class="grid grid-cols-2 gap-3"></div>
+        </div>
 
-            const greetings = { pagi: 'pagi', siang: 'siang', sore: 'sore', malam: 'malam' };
-            const currentContacts = selectedPJ ? contactData[selectedPJ] : [];
+        <!-- Purpose -->
+        <div id="tujuanBlock" class="hidden bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 shadow-xl animate-slide-up">
+          <label class="block text-lg font-semibold mb-3 text-purple-300">Tujuan Menghubungi</label>
+          <textarea id="tujuanInput" placeholder="Isi pesan anda di sini" rows="4" class="w-full bg-slate-800/50 border border-purple-500/50 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all resize-none"></textarea>
+        </div>
+      </div>
 
-            const filteredContacts = useMemo(() => {
-                if (!searchTerm) return currentContacts;
-                return currentContacts.filter(contact =>
-                    contact.unit.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-                );
-            }, [currentContacts, searchTerm]);
+      <!-- Right Panel - Preview & Actions -->
+      <div id="rightPanel" class="space-y-6 animate-slide-left hidden">
+        <!-- Preview -->
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 shadow-xl">
+          <h3 class="text-lg font-semibold mb-4 text-purple-300">📱 Preview Pesan</h3>
+          <div class="bg-slate-800/70 rounded-xl p-6 max-h-96 overflow-y-auto">
+            <pre id="previewMessage" class="text-sm text-gray-200 font-sans leading-relaxed"></pre>
+          </div>
+        </div>
 
-            const generatedMessage = useMemo(() => {
-                if (!selectedPJ || !selectedContact || !message) return '';
-                return `Assalamualaikum Wr. Wb. Selamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Mohon maaf mengganggu waktunya.\n\nPerkenalkan kembali saya ${selectedPJ} selaku Staf Muda Bidang K&PSDM BEM FKM UNDIP 2026 yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM UNDIP dengan ${selectedContact.unit}.\n\nMaksud dan tujuan saya menghubungi Kak ${selectedContact.name} selaku ${selectedContact.position} adalah untuk ${message}\n\nSekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${selectedContact.name}. Mohon maaf apabila terdapat kesalahan dalam penggunaan kata.\n\nSelamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Wassalamualaikum Wr. Wb.`;
-            }, [selectedPJ, selectedContact, timeOfDay, message]);
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-2 gap-4">
+          <button id="copyBtn" class="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 p-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-blue-500/50 hover:scale-105 active:scale-95">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke-width="1.5"/><rect x="2" y="2" width="13" height="13" rx="2" ry="2" stroke-width="1.5"/></svg>
+            <span id="copyBtnText">Salin Pesan</span>
+          </button>
+          <button id="sendBtn" class="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 p-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-green-500/50 hover:scale-105 active:scale-95">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 2L11 13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2l-7 20 1-7 7-13z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Kirim WA
+          </button>
+        </div>
+      </div>
+    </div>
 
-            const formatPhoneNumber = (phone) => {
-                const cleaned = phone.replace(/\D/g, '');
-                return cleaned.startsWith('0') ? '62' + cleaned.substring(1) : cleaned;
-            };
+    <!-- Footer -->
+    <div class="mt-12 text-center text-purple-300 text-sm">
+      <p>© 2026 — Designed & Developed by Program, Sinergitas, dan Informasi</p>
+    </div>
+  </div>
 
-            const handleCopy = () => {
-                navigator.clipboard.writeText(generatedMessage);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
-            };
+  <script>
+    // -- Data (identik dengan source Anda) --
+    const STAFF_DATA = {
+      evan: {
+        name: 'Evan',
+        contacts: [
+          { nama: 'Fikhar', unit: 'Ketua BEM FKM', phone: '082116796008' },
+          { nama: 'Ilham', unit: 'Ketua Himpunan Mahasiswa Kesehatan Masyarakat', phone: '089539714525' },
+          { nama: 'Jey', unit: 'Departemen PPI Himpunan Mahasiswa Kesehatan Masyarakat', phone: '0811128644' },
+          { nama: 'Farah', unit: 'Departemen PI Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '082137753469' },
+          { nama: 'Maharani', unit: 'Ketua Peminatan Kesehatan Lingkungan', phone: '08139340970' },
+          { nama: 'Alifah', unit: 'Biro KMI BEM FKM', phone: '08117671202' },
+          { nama: 'Deny', unit: 'Bidang K&PENGMAS BEM FKM', phone: '08112618995' }
+        ]
+      },
+      jeo: {
+        name: 'Jeo',
+        contacts: [
+          { nama: 'Karen', unit: 'PSM FKM', phone: '08121411801' },
+          { nama: 'Syakira', unit: 'Departemen Keilmuan Himpunan Mahasiswa Kesehatan Masyarakat', phone: '085769569991' },
+          { nama: 'Fibri', unit: 'Departemen Medinfo Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '081325740363' },
+          { nama: 'Husain', unit: 'Peminatan K3', phone: '087722460391' },
+          { nama: 'Milda', unit: 'Biro Admin BEM FKM', phone: '081332334398' },
+          { nama: 'Jihan', unit: 'Bidang Mikat BEM FKM', phone: '088215109680' }
+        ]
+      },
+      lily: {
+        name: 'Lily',
+        contacts: [
+          { nama: 'Amanda', unit: 'PIRC', phone: '6289536334701' },
+          { nama: 'Cornelia', unit: 'Sportyca', phone: '085212367554' },
+          { nama: 'Kinan', unit: 'Departemen Kemahasiswaan Himpunan Mahasiswa Kesehatan Masyarakat', phone: '087738831766' },
+          { nama: 'Shifa', unit: 'Departemen PSDM Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '081390240726' },
+          { nama: 'Salwa Audrie', unit: 'Peminatan Epidemiologi', phone: '089521897115' },
+          { nama: 'Surya Natanegara', unit: 'Peminatan Entomologi', phone: '085718921051' },
+          { nama: 'Maulida', unit: 'Bidang Riskel BEM FKM', phone: '085877335371' },
+          { nama: 'Darin', unit: 'Bidang Ekotif BEM FKM', phone: '089669129858' }
+        ]
+      },
+      wawa: {
+        name: 'Wawa',
+        contacts: [
+          { nama: 'Naila', unit: 'Senat', phone: '082110063943' },
+          { nama: 'Arina', unit: 'Departemen PSDM Himpunan Mahasiswa Kesehatan Masyarakat', phone: '087782951049' },
+          { nama: 'Ruth', unit: 'Departemen Tipemu Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '085271024742' },
+          { nama: 'Rayung', unit: 'Peminatan PKIP', phone: '087839475453' },
+          { nama: 'Ghifari', unit: 'Komting 2025', phone: '081918481223' },
+          { nama: 'Ghani', unit: 'Bidang Sospol BEM FKM', phone: '087885156165' },
+          { nama: 'Daffa', unit: 'Bidang Harkam BEM FKM', phone: '082134809481' }
+        ]
+      },
+      aru: {
+        name: 'Aru',
+        contacts: [
+          { nama: 'Sera', unit: 'Studio8', phone: '087889808483' },
+          { nama: 'Dita', unit: 'Departemen KMI Himpunan Mahasiswa Kesehatan Masyarakat', phone: '085712724984' },
+          { nama: 'Alma', unit: 'Departemen Pengmas Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '085210586748' },
+          { nama: 'Nazwa', unit: 'Peminatan AKK', phone: '08113978978' },
+          { nama: 'Bima', unit: 'Bidang Kestra BEM FKM', phone: '081229801055' }
+        ]
+      },
+      faiza: {
+        name: 'Faiza',
+        contacts: [
+          { nama: 'Andi', unit: 'Ketua Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '085884781730' },
+          { nama: 'Deswita', unit: 'Departemen Sosmas Himpunan Mahasiswa Kesehatan Masyarakat', phone: '087810076394' },
+          { nama: 'Winda', unit: 'Departemen Seniora Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '089601418488' },
+          { nama: 'Syahfitri', unit: 'Peminatan Gizi Kesmas', phone: '085716738931' },
+          { nama: 'Mutia', unit: 'Pokja ISMKMI BEM FKM', phone: '081297220219' }
+        ]
+      },
+      ian: {
+        name: 'Ian',
+        contacts: [
+          { nama: 'Dinda', unit: 'KSR', phone: '085727583052' },
+          { nama: 'Talitha', unit: 'Departemen Seniora Himpunan Mahasiswa Kesehatan Masyarakat', phone: '081918431357' },
+          { nama: 'Grinna', unit: 'Departemen Notif Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '081932371915' },
+          { nama: 'Taat Wigati', unit: 'Peminatan Biostatistika & Kependudukan', phone: '088225234055' },
+          { nama: 'Sulthon', unit: 'Bidang CED BEM FKM', phone: '089980232596' }
+        ]
+      },
+      kattari: {
+        name: 'Kattari',
+        contacts: [
+          { nama: 'Muna', unit: 'Departemen Kewirausahaan Himpunan Mahasiswa Kesehatan Masyarakat', phone: '085713187074' },
+          { nama: 'Zahirah', unit: 'Penwa', phone: '082138316959' },
+          { nama: 'Grestine', unit: 'Komting 2023', phone: '085881797522' },
+          { nama: 'Andreas', unit: 'Komting 2024', phone: '085695572360' },
+          { nama: 'Neibila', unit: 'Bidang Kesma BEM FKM', phone: '081228935025' }
+        ]
+      }
+    };
 
-            const handleSendWhatsApp = () => {
-                if (!selectedContact) return;
-                const encodedMessage = encodeURIComponent(generatedMessage);
-                const phoneNumber = formatPhoneNumber(selectedContact.phone);
-                window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
-            };
+    const GREETINGS = {
+      pagi: 'pagi',
+      siang: 'siang',
+      sore: 'sore',
+      malam: 'malam'
+    };
 
-            return (
-                <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-x-hidden pb-10">
-                    {/* Header */}
-                    <div className="glass-header sticky top-0 z-50 backdrop-blur-2xl bg-white/60 border-b border-white/20 shadow-lg p-5">
-                        <div className="max-w-7xl mx-auto flex items-center gap-5">
-                            <img src="https://i.ibb.co/Q77x9w9/VdVjBHC.png" className="w-16 h-16 object-contain" />
-                            <div>
-                                <h1 className="text-xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-pink-600 bg-clip-text text-transparent">
-                                    WEBSITE INTERCOM BIDANG K&PSDM
-                                </h1>
-                                <p className="text-sm text-gray-700 font-semibold">BEM FKM UNDIP 2026 - KABINET ARUNIKA</p>
-                            </div>
-                        </div>
-                    </div>
+    // -- State --
+    let selectedStaff = '';
+    let selectedContact = null;
+    let waktu = 'pagi';
+    let tujuan = '';
+    let searchQuery = '';
+    let copiedTimeout = null;
 
-                    <div className="max-w-4xl mx-auto px-6 py-10 space-y-6 relative z-10">
-                        {/* Pilih Pengirim */}
-                        <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 border shadow-xl">
-                            <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-blue-500"></span> Pilih Nama Pengirim
-                            </h2>
-                            <select 
-                                value={selectedPJ}
-                                onChange={(e) => { setSelectedPJ(e.target.value); setSelectedContact(null); }}
-                                className="w-full p-4 rounded-2xl border-2 border-blue-100 outline-none focus:border-blue-500"
-                            >
-                                <option value="">-- Pilih Nama Kamu --</option>
-                                {Object.keys(contactData).map(name => <option key={name} value={name}>{name}</option>)}
-                            </select>
-                        </div>
+    // -- Elements --
+    const staffSelect = document.getElementById('staffSelect');
+    const searchBlock = document.getElementById('searchBlock');
+    const searchInput = document.getElementById('searchInput');
+    const contactsBlock = document.getElementById('contactsBlock');
+    const contactsList = document.getElementById('contactsList');
+    const waktuBlock = document.getElementById('waktuBlock');
+    const waktuButtons = document.getElementById('waktuButtons');
+    const tujuanBlock = document.getElementById('tujuanBlock');
+    const tujuanInput = document.getElementById('tujuanInput');
+    const rightPanel = document.getElementById('rightPanel');
+    const previewMessageEl = document.getElementById('previewMessage');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyBtnText = document.getElementById('copyBtnText');
+    const sendBtn = document.getElementById('sendBtn');
+    const headerImage = document.getElementById('headerImage');
 
-                        {selectedPJ && (
-                            <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 border shadow-xl">
-                                <h2 className="text-lg font-bold text-gray-800 mb-4">Cari Kontak Penerima</h2>
-                                <div className="relative mb-4">
-                                    <input 
-                                        type="text" 
-                                        placeholder="Cari unit atau nama..."
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                        className="w-full p-4 pl-12 rounded-2xl border-2 border-blue-100"
-                                    />
-                                    <div className="absolute left-4 top-4 opacity-50"><LucideIcon name="Search" className="w-5 h-5" /></div>
-                                </div>
-                                <div className="grid gap-3 max-h-64 overflow-y-auto pr-2">
-                                    {filteredContacts.map((contact, idx) => (
-                                        <button 
-                                            key={idx}
-                                            onClick={() => setSelectedContact(contact)}
-                                            className={`p-4 rounded-2xl text-left border transition ${selectedContact === contact ? 'bg-blue-600 text-white' : 'bg-white/50 hover:bg-blue-50'}`}
-                                        >
-                                            <div className="font-bold text-sm uppercase">{contact.unit}</div>
-                                            <div className="text-xs opacity-80">{contact.name}</div>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
+    // -- Initialize UI --
+    function init() {
+      // populate staff options
+      Object.entries(STAFF_DATA).forEach(([key, data]) => {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = data.name;
+        staffSelect.appendChild(opt);
+      });
 
-                        {selectedContact && (
-                            <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 border shadow-xl space-y-4">
-                                <h2 className="text-lg font-bold text-gray-800">Detail Pesan</h2>
-                                <div className="grid grid-cols-4 gap-2">
-                                    {['pagi', 'siang', 'sore', 'malam'].map(t => (
-                                        <button 
-                                            key={t}
-                                            onClick={() => setTimeOfDay(t)}
-                                            className={`p-3 rounded-xl font-bold capitalize transition ${timeOfDay === t ? 'bg-blue-600 text-white' : 'bg-white border'}`}
-                                        >
-                                            {t}
-                                        </button>
-                                    ))}
-                                </div>
-                                <textarea 
-                                    placeholder="Tulis maksud tujuan..."
-                                    value={message}
-                                    onChange={(e) => setMessage(e.target.value)}
-                                    className="w-full h-32 p-4 rounded-2xl border-2 border-blue-100 outline-none"
-                                />
-                                
-                                {generatedMessage && (
-                                    <div className="space-y-4">
-                                        <div className="p-4 bg-white/50 border rounded-2xl text-sm whitespace-pre-wrap leading-relaxed italic">
-                                            {generatedMessage}
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <button onClick={handleCopy} className="p-4 rounded-2xl bg-slate-800 text-white font-bold flex items-center justify-center gap-2">
-                                                <LucideIcon name={copied ? "Check" : "Copy"} className="w-5 h-5" /> {copied ? 'Tersalin' : 'Salin'}
-                                            </button>
-                                            <button onClick={handleSendWhatsApp} className="p-4 rounded-2xl bg-green-600 text-white font-bold flex items-center justify-center gap-2">
-                                                <LucideIcon name="Send" className="w-5 h-5" /> Kirim WA
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            );
-        };
+      // waktu buttons
+      Object.keys(GREETINGS).forEach(key => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+        btn.className = `p-3 rounded-xl transition-all duration-300 capitalize ${waktu === key ? 'bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg scale-105' : 'bg-slate-800/50 hover:bg-slate-700/50'}`;
+        btn.addEventListener('click', () => {
+          waktu = key;
+          updateWaktuButtons();
+          renderPreview();
+        });
+        waktuButtons.appendChild(btn);
+      });
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+      // event listeners
+      staffSelect.addEventListener('change', (e) => {
+        selectedStaff = e.target.value;
+        selectedContact = null;
+        searchQuery = '';
+        searchInput.value = '';
+        copyBtnText.textContent = 'Salin Pesan';
+        // show/hide blocks
+        searchBlock.classList.toggle('hidden', !selectedStaff);
+        contactsBlock.classList.toggle('hidden', !selectedStaff);
+        updateContacts();
+        waktuBlock.classList.toggle('hidden', true);
+        tujuanBlock.classList.toggle('hidden', true);
+        rightPanel.classList.add('hidden');
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim();
+        updateContacts();
+      });
+
+      tujuanInput.addEventListener('input', (e) => {
+        tujuan = e.target.value;
+        renderPreview();
+        checkRightPanelVisibility();
+      });
+
+      copyBtn.addEventListener('click', async () => {
+        const msg = generateMessage();
+        if (!msg) return;
+        try {
+          await navigator.clipboard.writeText(msg);
+          copyBtnText.textContent = 'Tersalin!';
+          if (copiedTimeout) clearTimeout(copiedTimeout);
+          copiedTimeout = setTimeout(() => { copyBtnText.textContent = 'Salin Pesan'; }, 2000);
+        } catch (err) {
+          // fallback
+          prompt('Salin pesan ini secara manual:', msg);
+        }
+      });
+
+      sendBtn.addEventListener('click', () => {
+        if (!selectedContact) return;
+        const message = generateMessage();
+        if (!message) return;
+        const encodedMessage = encodeURIComponent(message);
+        const phone = selectedContact.phone.replace(/\D/g, '');
+        // open wa.me
+        window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');
+      });
+
+      // optional: let user click header image to paste new src (URL or base64)
+      headerImage.addEventListener('click', () => {
+        const newSrc = prompt('Tempel URL gambar atau data:image/... (base64). Kosongkan untuk menghapus:');
+        if (newSrc === null) return;
+        if (newSrc.trim() === '') {
+          headerImage.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+        } else {
+          headerImage.src = newSrc.trim();
+        }
+      });
+    }
+
+    // -- Helpers --
+    function getFilteredContacts() {
+      if (!selectedStaff) return [];
+      const contacts = STAFF_DATA[selectedStaff]?.contacts || [];
+      if (!searchQuery) return contacts;
+      const q = searchQuery.toLowerCase();
+      return contacts.filter(contact =>
+        (contact.nama || '').toLowerCase().includes(q) ||
+        (contact.unit || '').toLowerCase().includes(q)
+      );
+    }
+
+    function updateContacts() {
+      contactsList.innerHTML = '';
+      const filtered = getFilteredContacts();
+      if (filtered.length === 0) {
+        contactsList.innerHTML = '<div class="text-sm text-gray-400">Tidak ada kontak.</div>';
+        return;
+      }
+      filtered.forEach((contact, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-full text-left p-4 rounded-xl transition-all duration-300 ${selectedContact?.phone === contact.phone ? 'bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg scale-105' : 'bg-slate-800/50 hover:bg-slate-700/50'}`;
+        btn.innerHTML = `
+          <div class="font-semibold text-lg">${escapeHtml(contact.unit)}</div>
+          <div class="text-sm text-purple-300 mt-1">${escapeHtml(contact.nama)}</div>
+          <div class="text-xs text-gray-400 mt-1">${escapeHtml(contact.phone)}</div>
+        `;
+        btn.addEventListener('click', () => {
+          selectedContact = contact;
+          tujuan = tujuanInput.value.trim();
+          // show waktu and tujuan blocks
+          waktuBlock.classList.toggle('hidden', false);
+          tujuanBlock.classList.toggle('hidden', false);
+          updateContacts();
+          updateWaktuButtons();
+          renderPreview();
+          checkRightPanelVisibility();
+        });
+        contactsList.appendChild(btn);
+      });
+    }
+
+    function updateWaktuButtons() {
+      Array.from(waktuButtons.children).forEach(btn => {
+        const key = btn.textContent.toLowerCase();
+        if (key === waktu) {
+          btn.className = 'p-3 rounded-xl transition-all duration-300 capitalize bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg scale-105';
+        } else {
+          btn.className = 'p-3 rounded-xl transition-all duration-300 capitalize bg-slate-800/50 hover:bg-slate-700/50';
+        }
+      });
+    }
+
+    function generateMessage() {
+      if (!selectedContact || !tujuan.trim()) return '';
+      const staffName = STAFF_DATA[selectedStaff]?.name || '';
+      const greeting = GREETINGS[waktu] || GREETINGS.pagi;
+      const unitForParagraph2 = (selectedContact.unit || '').replace(/^Ketua\s+/i, '');
+      return `Assalamualaikum Wr. Wb. Selamat ${greeting}, Kak ${selectedContact.nama}. Mohon maaf apabila mengganggu waktunya.
+
+Perkenalkan kembali saya ${staffName} selaku Staf Muda Bidang Keorganisasian dan Pengembangan Sumber Daya Manusia (K&PSDM) BEM FKM Undip 2026 yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM Undip dengan ${unitForParagraph2}.
+
+Maksud dan tujuan saya menghubungi Kak ${selectedContact.nama} selaku ${selectedContact.unit} 2026 adalah untuk ${tujuan}
+
+Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${selectedContact.nama}. Mohon maaf apabila terdapat kesalahan dalam penggunaan kata. Selamat ${greeting}, Kak ${selectedContact.nama}. Wassalamualaikum Wr. Wb.`;
+    }
+
+    function renderPreview() {
+      previewMessageEl.textContent = generateMessage();
+    }
+
+    function checkRightPanelVisibility() {
+      if (selectedContact && tujuan.trim()) {
+        rightPanel.classList.remove('hidden');
+      } else {
+        rightPanel.classList.add('hidden');
+      }
+    }
+
+    // simple HTML escape
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    // init app
+    init();
+  </script>
 </body>
 </html>
