@@ -4,96 +4,356 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEBSITE INTERCOM BEM FKM UNDIP 2026</title>
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.5); }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
-    </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 to-blue-100 min-h-screen pb-10">
+<body>
+    <div id="root"></div>
 
-    <div class="sticky top-0 z-50 bg-white/60 backdrop-blur-lg border-b p-4 shadow-sm">
-        <div class="max-w-4xl mx-auto flex items-center gap-4">
-            <img src="https://i.ibb.co/Q77x9w9/VdVjBHC.png" class="w-12 h-12 object-contain">
-            <div>
-                <h1 class="text-lg md:text-xl font-bold text-blue-600">WEBSITE INTERCOM K&PSDM</h1>
-                <p class="text-xs text-gray-600 font-semibold">BEM FKM UNDIP 2026</p>
-            </div>
-        </div>
-    </div>
+    <script type="text/babel">
+        // INI ADALAH KODINGAN ASLI KAMU TANPA PERUBAHAN
+        const { useState, useMemo, useEffect } = React;
+        const { Search, Send, Copy, Check, MessageSquare } = lucide;
 
-    <div class="max-w-4xl mx-auto px-4 mt-6 space-y-6">
-        <div class="glass-card rounded-2xl p-5 shadow-lg">
-            <label class="block text-sm font-bold text-gray-700 mb-3">1. Pilih Nama Pengirim (Staf Muda)</label>
-            <select id="senderSelect" class="w-full p-3 rounded-xl border-2 border-blue-100 outline-none focus:border-blue-500 transition">
-                <option value="">-- Pilih Nama Kamu --</option>
-                <option value="Evan">Evan</option>
-                <option value="Jeo">Jeo</option>
-                <option value="Lily">Lily</option>
-                <option value="Wawa">Wawa</option>
-                <option value="Aru">Aru</option>
-                <option value="Faiza">Faiza</option>
-                <option value="Ian">Ian</option>
-                <option value="Kattari">Kattari</option>
-            </select>
-        </div>
+        const App = () => {
+            // ... (Kodingan asli kamu saya masukkan semua ke sini)
+            const [selectedPJ, setSelectedPJ] = useState('');
+            const [selectedContact, setSelectedContact] = useState(null);
+            const [timeOfDay, setTimeOfDay] = useState('pagi');
+            const [message, setMessage] = useState('');
+            const [copied, setCopied] = useState(false);
+            const [searchTerm, setSearchTerm] = useState('');
 
-        <div class="glass-card rounded-2xl p-5 shadow-lg space-y-4">
-            <h2 class="text-sm font-bold text-gray-700">2. Detail Penerima Chat</h2>
-            <input type="text" id="receiverName" placeholder="Nama Kakak Tingkat/PJ" class="w-full p-3 rounded-xl border-2 border-blue-100 outline-none focus:border-blue-500">
-            <input type="text" id="receiverUnit" placeholder="Unit/Lembaga (Contoh: BEM FKM)" class="w-full p-3 rounded-xl border-2 border-blue-100 outline-none focus:border-blue-500">
-            <input type="text" id="receiverPhone" placeholder="Nomor WA (Contoh: 08123...)" class="w-full p-3 rounded-xl border-2 border-blue-100 outline-none focus:border-blue-500">
-            
-            <label class="block text-xs font-bold text-gray-500">Waktu Sapaan</label>
-            <select id="timeGreeting" class="w-full p-3 rounded-xl border-2 border-blue-100">
-                <option value="pagi">Pagi</option>
-                <option value="siang">Siang</option>
-                <option value="sore">Sore</option>
-                <option value="malam">Malam</option>
-            </select>
-        </div>
+            const contactData = {
+                'Evan': [
+                    { unit: 'BEM FKM', phone: '082116796008', name: 'Fikhar', position: 'Ketua BEM FKM' },
+                    { unit: 'HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '089539714502', name: 'Ilham', position: 'Ketua Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN PPI HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '08111286442', name: 'Jey', position: 'Ketua Departemen PPI Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN PI HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '082137753469', name: 'Farah', position: 'Ketua Departemen PI Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN KESEHATAN LINGKUNGAN', phone: '081393409708', name: 'Maharani', position: 'Peminatan Kesehatan Lingkungan' },
+                    { unit: 'BIRO KMI BEM FKM', phone: '08117671202', name: 'Alifah', position: 'Ketua Biro KMI BEM FKM' },
+                    { unit: 'BIDANG K&PENGMAS BEM FKM', phone: '08112618995', name: 'Deny', position: 'Ketua Bidang K&PENGMAS BEM FKM' }
+                ],
+                'Jeo': [
+                    { unit: 'PSM FKM', phone: '08121411801', name: 'Karen', position: 'PSM FKM' },
+                    { unit: 'DEPARTEMEN KEILMUAN HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '085769569991', name: 'Syakira', position: 'Ketua Departemen Keilmuan Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN MEDINFO HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '081325740363', name: 'Fibri', position: 'Ketua Departemen Medinfo Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN K3', phone: '087722460391', name: 'Husain', position: 'Peminatan K3' },
+                    { unit: 'BIRO ADMIN BEM FKM', phone: '081332334398', name: 'Milda', position: 'Ketua Biro Admin BEM FKM' },
+                    { unit: 'BIDANG MIKAT BEM FKM', phone: '088215109680', name: 'Jihan', position: 'Ketua Bidang MIKAT BEM FKM' }
+                ],
+                'Lily': [
+                    { unit: 'PIRC', phone: '089536334701', name: 'Amanda', position: 'PIRC' },
+                    { unit: 'SPORTYCA', phone: '085212367554', name: 'Cornelia', position: 'Sportyca' },
+                    { unit: 'DEPARTEMEN KEMAHASISWAAN HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '087738831766', name: 'Kinan', position: 'Ketua Departemen Kemahasiswaan Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN PSDM HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '081390240726', name: 'Shifa', position: 'Ketua Departemen PSDM Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN EPIDEMIOLOGI', phone: '089521897115', name: 'Salwa Audrie', position: 'Peminatan Epidemiologi' },
+                    { unit: 'PEMINATAN ENTOMOLOGI', phone: '085718921051', name: 'Surya Natanegara', position: 'Peminatan Entomologi' },
+                    { unit: 'BIDANG RISKEL BEM FKM', phone: '085877335371', name: 'Maulida', position: 'Ketua Bidang RISKEL BEM FKM' },
+                    { unit: 'BIDANG EKOTIF BEM FKM', phone: '089669129858', name: 'Darin', position: 'Ketua Bidang EKOTIF BEM FKM' }
+                ],
+                'Wawa': [
+                    { unit: 'SENAT MAHASISWA FKM', phone: '082110063943', name: 'Naila', position: 'Senat Mahasiswa FKM' },
+                    { unit: 'DEPARTEMEN PSDM HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '087782951049', name: 'Arina', position: 'Ketua Departemen PSDM Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN TIPEMU HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '085271024742', name: 'Ruth', position: 'Ketua Departemen TIPEMU Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN PKIP', phone: '087839475453', name: 'Rayung', position: 'Peminatan PKIP' },
+                    { unit: 'KOMTING 2025', phone: '081918481223', name: 'Ghifari', position: 'Komting 2025' },
+                    { unit: 'BIDANG SOSPOL BEM FKM', phone: '087885156165', name: 'Ghani', position: 'Ketua Bidang SOSPOL BEM FKM' },
+                    { unit: 'BIDANG HARKAM BEM FKM', phone: '082134809481', name: 'Daffa', position: 'Ketua Bidang HARKAM BEM FKM' }
+                ],
+                'Aru': [
+                    { unit: 'STOPHIVA', phone: '085225414582', name: 'Nurul Izzah', position: 'StopHIVa' },
+                    { unit: 'STUDIO8', phone: '087889808483', name: 'Sera', position: 'Studio8' },
+                    { unit: 'DEPARTEMEN KMI HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '085712724984', name: 'Dita', position: 'Ketua Departemen KMI Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN PENGMAS HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '085210586748', name: 'Alma', position: 'Ketua Departemen Pengmas Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN AKK', phone: '08113978978', name: 'Nazwa', position: 'Peminatan AKK' },
+                    { unit: 'BIDANG KESTRA BEM FKM', phone: '081229801055', name: 'Bima', position: 'Ketua Bidang KESTRA BEM FKM' }
+                ],
+                'Faiza': [
+                    { unit: 'HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '085884781730', name: 'Andi', position: 'Ketua Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'DEPARTEMEN SOSMAS HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '087810076394', name: 'Deswita', position: 'Ketua Departemen Sosmas Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN SENIORA HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '089601418488', name: 'Winda', position: 'Ketua Departemen Seniora Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN GIZI KESEHATAN MASYARAKAT', phone: '085716738931', name: 'Syahfitri', position: 'Peminatan Gizi Kesehatan Masyarakat' },
+                    { unit: 'BIDANG POKJA ISMKMI BEM FKM', phone: '081297220219', name: 'Mutia', position: 'Ketua Bidang POKJA ISMKMI BEM FKM' }
+                ],
+                'Ian': [
+                    { unit: 'KSR', phone: '085727583052', name: 'Dinda', position: 'KSR' },
+                    { unit: 'DEPARTEMEN SENIORA HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '081918431357', name: 'Talitha', position: 'Ketua Departemen Seniora Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN NOTIF HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '081932371915', name: 'Grinna', position: 'Ketua Departemen NOTIF Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'PEMINATAN BIOSTATISTIKA DAN KEPENDUDUKAN', phone: '088225234055', name: 'Taat Wigati', position: 'Peminatan Biostatistika dan Kependudukan' },
+                    { unit: 'BIDANG CED BEM FKM', phone: '089980232596', name: 'Sulthon', position: 'Ketua Bidang CED BEM FKM' }
+                ],
+                'Kattari': [
+                    { unit: 'DEPARTEMEN KEWIRAUSAHAAN HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '085713187074', name: 'Muna', position: 'Ketua Departemen Kewirausahaan Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN PENWA HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '082138316959', name: 'Zahirah', position: 'Ketua Departemen PENWA Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
+                    { unit: 'KOMTING 2023', phone: '085881797522', name: 'Grestine', position: 'Komting 2023' },
+                    { unit: 'KOMTING 2024', phone: '085695572360', name: 'Andreas', position: 'Komting 2024' },
+                    { unit: 'BIDANG KESMA BEM FKM', phone: '081228935025', name: 'Neibila', position: 'Ketua Bidang KESMA BEM FKM' }
+                ]
+            };
 
-        <div class="glass-card rounded-2xl p-5 shadow-lg">
-            <label class="block text-sm font-bold text-gray-700 mb-3">3. Maksud dan Tujuan</label>
-            <textarea id="aimMessage" placeholder="Contoh: mengundang dalam rapat koordinasi..." class="w-full p-3 h-32 rounded-xl border-2 border-blue-100 outline-none focus:border-blue-500 resize-none"></textarea>
-            
-            <button onclick="generateChat()" class="w-full mt-4 bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition shadow-lg flex items-center justify-center gap-2">
-                <i data-lucide="message-square" class="w-5 h-5"></i> Generate & Kirim WA
-            </button>
-        </div>
-    </div>
+            const greetings = { pagi: 'pagi', siang: 'siang', sore: 'sore', malam: 'malam' };
+            const currentContacts = selectedPJ ? contactData[selectedPJ] : [];
 
-    <script>
-        lucide.createIcons();
+            const filteredContacts = useMemo(() => {
+                if (!searchTerm) return currentContacts;
+                return currentContacts.filter(contact =>
+                    contact.unit.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }, [currentContacts, searchTerm]);
 
-        function generateChat() {
-            const sender = document.getElementById('senderSelect').value;
-            const receiver = document.getElementById('receiverName').value;
-            const unit = document.getElementById('receiverUnit').value;
-            const phone = document.getElementById('receiverPhone').value;
-            const time = document.getElementById('timeGreeting').value;
-            const aim = document.getElementById('aimMessage').value;
+            const generatedMessage = useMemo(() => {
+                if (!selectedPJ || !selectedContact || !message) return '';
+                return `Assalamualaikum Wr. Wb. Selamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Mohon maaf mengganggu waktunya.
 
-            if(!sender || !receiver || !phone) {
-                alert("Mohon isi nama pengirim, nama penerima, dan nomor WA!");
-                return;
-            }
+Perkenalkan kembali saya ${selectedPJ} selaku Staf Muda Bidang K&PSDM BEM FKM UNDIP 2026 yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM UNDIP dengan ${selectedContact.unit}.
 
-            const text = `Assalamualaikum Wr. Wb. Selamat ${time}, Kak ${receiver}. Mohon maaf mengganggu waktunya.
+Maksud dan tujuan saya menghubungi Kak ${selectedContact.name} selaku ${selectedContact.position} adalah untuk ${message}
 
-Perkenalkan kembali saya ${sender} selaku Staf Muda Bidang K&PSDM BEM FKM UNDIP 2026 yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM UNDIP dengan ${unit}.
+Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${selectedContact.name}. Mohon maaf apabila terdapat kesalahan dalam penggunaan kata.
 
-Maksud dan tujuan saya menghubungi Kak ${receiver} adalah untuk ${aim}
+Selamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Wassalamualaikum Wr. Wb.`;
+            }, [selectedPJ, selectedContact, timeOfDay, message]);
 
-Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${receiver}. Mohon maaf apabila terdapat kesalahan dalam penggunaan kata.
+            const formatPhoneNumber = (phone) => {
+                const cleaned = phone.replace(/\D/g, '');
+                return cleaned.startsWith('0') ? '62' + cleaned.substring(1) : cleaned;
+            };
 
-Selamat ${time}, Kak ${receiver}. Wassalamualaikum Wr. Wb.`;
+            const handleCopy = () => {
+                navigator.clipboard.writeText(generatedMessage);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            };
 
-            const cleanPhone = phone.replace(/^0/, '62');
-            window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
-        }
+            const handleSendWhatsApp = () => {
+                if (!selectedContact) return;
+                const encodedMessage = encodeURIComponent(generatedMessage);
+                const phoneNumber = formatPhoneNumber(selectedContact.phone);
+                window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+                        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+                        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+                    </div>
+
+                    <div className="glass-header sticky top-0 z-50 backdrop-blur-2xl bg-white/60 border-b border-white/20 shadow-lg">
+                        <div className="max-w-7xl mx-auto px-6 py-5">
+                            <div className="flex items-center gap-5">
+                                <div className="glass-logo flex-shrink-0 rounded-3xl bg-white/90 backdrop-blur-xl border border-white/50 shadow-2xl p-2">
+                                    <img 
+                                        src="https://i.ibb.co/Q77x9w9/VdVjBHC.png"
+                                        alt="Logo PSDM BEM FKM UNDIP"
+                                        className="w-16 h-16 md:w-20 md:h-20 object-contain"
+                                    />
+                                </div>
+                                <div className="flex-1">
+                                    <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">
+                                        WEBSITE INTERCOM BIDANG K&PSDM
+                                    </h1>
+                                    <p className="text-base md:text-lg text-gray-700 font-semibold mt-1">
+                                        BEM FKM UNDIP 2026 - KABINET ARUNIKA
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="max-w-7xl mx-auto px-6 py-10 relative z-10">
+                        <div className="grid lg:grid-cols-2 gap-8">
+                            <div className="space-y-6">
+                                <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-7 border border-white/50 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02]">
+                                    <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                                        Nama Pengirim
+                                    </h2>
+                                    <select
+                                        value={selectedPJ}
+                                        onChange={(e) => { setSelectedPJ(e.target.value); setSelectedContact(null); setSearchTerm(''); }}
+                                        className="glass-input w-full px-5 py-4 rounded-2xl backdrop-blur-xl bg-white/80 border-2 border-blue-200/50 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all duration-300 text-gray-800 font-semibold shadow-inner"
+                                    >
+                                        <option value="">Pilih nama pengirim...</option>
+                                        {Object.keys(contactData).map(pj => <option key={pj} value={pj}>{pj}</option>)}
+                                    </select>
+                                </div>
+
+                                {selectedPJ && (
+                                    <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-7 border border-white/50 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02]">
+                                        <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
+                                            Nama Penerima
+                                        </h2>
+                                        <div className="relative mb-4">
+                                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-400" />
+                                            <input
+                                                type="text"
+                                                placeholder="Cari kontak..."
+                                                value={searchTerm}
+                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                className="glass-input w-full pl-12 pr-5 py-4 rounded-2xl backdrop-blur-xl bg-white/80 border-2 border-blue-200/50 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all duration-300 text-gray-800 shadow-inner"
+                                            />
+                                        </div>
+                                        <div className="space-y-3 max-h-80 overflow-y-auto pr-2 custom-scrollbar">
+                                            {filteredContacts.map((contact, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => setSelectedContact(contact)}
+                                                    className={`w-full text-left p-5 rounded-2xl transition-all duration-500 ${
+                                                        selectedContact?.phone === contact.phone
+                                                            ? 'glass-selected backdrop-blur-2xl bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-2xl scale-105 border border-white/30'
+                                                            : 'glass-item backdrop-blur-xl bg-white/60 hover:bg-white/80 text-gray-800 border border-white/40 hover:border-blue-300 hover:shadow-xl hover:scale-[1.02]'
+                                                    }`}
+                                                >
+                                                    <div className="font-bold text-sm uppercase">{contact.unit}</div>
+                                                    <div className={`text-xs mt-2 ${selectedContact?.phone === contact.phone ? 'text-white/90' : 'text-gray-600'}`}>
+                                                        {contact.name} • {contact.phone}
+                                                    </div>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {selectedContact && (
+                                    <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-7 border border-white/50 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02]">
+                                        <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse"></div>
+                                            Detail Pesan
+                                        </h2>
+                                        <div className="mb-6">
+                                            <label className="block text-sm font-bold text-gray-700 mb-3">Waktu Pengiriman</label>
+                                            <div className="grid grid-cols-4 gap-2">
+                                                {['pagi', 'siang', 'sore', 'malam'].map(time => (
+                                                    <button
+                                                        key={time}
+                                                        onClick={() => setTimeOfDay(time)}
+                                                        className={`py-3 px-3 rounded-2xl font-bold transition-all duration-500 text-sm ${
+                                                            timeOfDay === time
+                                                                ? 'glass-selected backdrop-blur-2xl bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-2xl scale-110 border border-white/30'
+                                                                : 'glass-button backdrop-blur-xl bg-white/60 hover:bg-white/80 text-gray-700 border border-white/40 hover:border-blue-300 hover:shadow-lg hover:scale-105'
+                                                        }`}
+                                                    >
+                                                        {time}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-gray-700 mb-3">Isi Pesan</label>
+                                            <textarea
+                                                value={message}
+                                                onChange={(e) => setMessage(e.target.value)}
+                                                placeholder="Tulis maksud dan tujuan menghubungi..."
+                                                className="glass-input w-full px-5 py-4 rounded-2xl backdrop-blur-xl bg-white/80 border-2 border-blue-200/50 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none h-44 resize-none transition-all duration-300 text-gray-800 shadow-inner"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="space-y-6">
+                                {generatedMessage ? (
+                                    <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-7 border border-white/50 shadow-2xl sticky top-24">
+                                        <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
+                                            <MessageSquare className="w-6 h-6 text-blue-600" />
+                                            Preview Format Chat
+                                        </h2>
+                                        <div className="glass-info backdrop-blur-xl bg-gradient-to-br from-blue-50/80 to-purple-50/80 rounded-2xl p-5 mb-5 border border-blue-200/50 shadow-inner">
+                                            <div className="text-sm text-gray-800 mb-2"><strong className="text-blue-700">Kepada:</strong> {selectedContact.name}</div>
+                                            <div className="text-sm text-gray-800 mb-2"><strong className="text-blue-700">Unit:</strong> {selectedContact.unit}</div>
+                                            <div className="text-sm text-gray-800"><strong className="text-blue-700">Nomor:</strong> {selectedContact.phone}</div>
+                                        </div>
+                                        <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 mb-6 whitespace-pre-wrap text-sm text-gray-800 leading-relaxed max-h-96 overflow-y-auto border border-gray-200/50 custom-scrollbar shadow-inner">
+                                            {generatedMessage}
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <button onClick={handleCopy} className="glass-button-action backdrop-blur-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-5 rounded-2xl font-bold hover:shadow-2xl transition-all duration-500 hover:scale-110 flex items-center justify-center gap-2 border border-white/30">
+                                                {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+                                                {copied ? 'Tersalin!' : 'Salin'}
+                                            </button>
+                                            <button onClick={handleSendWhatsApp} className="glass-button-action backdrop-blur-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-5 rounded-2xl font-bold hover:shadow-2xl transition-all duration-500 hover:scale-110 flex items-center justify-center gap-2 border border-white/30">
+                                                <Send className="w-5 h-5" />
+                                                Kirim WA
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-20 border border-white/50 shadow-2xl text-center">
+                                        <div className="w-28 h-28 backdrop-blur-xl bg-gradient-to-br from-blue-100/80 to-purple-100/80 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl border border-white/40">
+                                            <MessageSquare className="w-14 h-14 text-blue-600" />
+                                        </div>
+                                        <p className="text-gray-600 font-semibold text-lg">Pilih pengirim dan penerima untuk generate format chat</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="text-center py-10 px-4 relative z-10">
+                        <p className="text-gray-700 font-semibold text-sm">© 2026 — Designed & Developed by Program, Sinergitas, dan Informasi</p>
+                    </div>
+
+                    <style>{`
+                        @keyframes blob {
+                            0%, 100% { transform: translate(0, 0) scale(1); }
+                            33% { transform: translate(30px, -50px) scale(1.1); }
+                            66% { transform: translate(-20px, 20px) scale(0.9); }
+                        }
+                        .animate-blob { animation: blob 7s infinite; }
+                        .animation-delay-2000 { animation-delay: 2s; }
+                        .animation-delay-4000 { animation-delay: 4s; }
+                        
+                        .glass-card, .glass-button, .glass-item, .glass-input {
+                            box-shadow: 
+                                0 8px 32px 0 rgba(31, 38, 135, 0.15),
+                                inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+                                inset 0 -1px 0 0 rgba(0, 0, 0, 0.05);
+                        }
+                        
+                        .glass-selected {
+                            box-shadow: 
+                                0 20px 40px 0 rgba(59, 130, 246, 0.4),
+                                0 0 0 1px rgba(255, 255, 255, 0.3),
+                                inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+                        }
+                        
+                        .glass-button-action {
+                            box-shadow: 
+                                0 10px 30px 0 rgba(59, 130, 246, 0.3),
+                                0 0 0 1px rgba(255, 255, 255, 0.3),
+                                inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+                        }
+                        
+                        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+                        .custom-scrollbar::-webkit-scrollbar-track { 
+                            background: rgba(255, 255, 255, 0.3); 
+                            border-radius: 10px; 
+                            backdrop-filter: blur(10px);
+                        }
+                        .custom-scrollbar::-webkit-scrollbar-thumb { 
+                            background: linear-gradient(to bottom, #3b82f6, #8b5cf6); 
+                            border-radius: 10px; 
+                            border: 2px solid rgba(255, 255, 255, 0.3);
+                        }
+                        .custom-scrollbar::-webkit-scrollbar-thumb:hover { 
+                            background: linear-gradient(to bottom, #2563eb, #7c3aed); 
+                        }
+                    `}</style>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
