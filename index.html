@@ -17,22 +17,25 @@
     <script type="text/babel">
         const { useState, useMemo, useEffect } = React;
 
-        // Helper untuk menampilkan Icon Lucide agar tidak Error/Blank
-        const Icon = ({ name, className }) => {
+        // Komponen Icon agar sama dengan desain kodingan asli kamu
+        const LucideIcon = ({ name, className }) => {
             const [iconHtml, setIconHtml] = useState('');
             useEffect(() => {
                 if (window.lucide) {
                     const icon = window.lucide.icons[name];
                     if (icon) {
-                        setIconHtml(window.lucide.createSvg(icon, { class: className }));
+                        const svg = window.lucide.createSvg(icon, { 
+                            class: className,
+                            'stroke-width': 2
+                        });
+                        setIconHtml(svg);
                     }
                 }
             }, [name, className]);
-            return <span dangerouslySetInnerHTML={{ __html: iconHtml }} />;
+            return <span className="inline-flex" dangerouslySetInnerHTML={{ __html: iconHtml }} />;
         };
 
         const App = () => {
-            // --- KODE ASLI KAMU TANPA PERUBAHAN LOGIKA ---
             const [selectedPJ, setSelectedPJ] = useState('');
             const [selectedContact, setSelectedContact] = useState(null);
             const [timeOfDay, setTimeOfDay] = useState('pagi');
@@ -40,6 +43,7 @@
             const [copied, setCopied] = useState(false);
             const [searchTerm, setSearchTerm] = useState('');
 
+            // Data kontak asli sesuai kodingan kamu
             const contactData = {
                 'Evan': [
                     { unit: 'BEM FKM', phone: '082116796008', name: 'Fikhar', position: 'Ketua BEM FKM' },
@@ -94,7 +98,7 @@
                 ],
                 'Ian': [
                     { unit: 'KSR', phone: '085727583052', name: 'Dinda', position: 'KSR' },
-                    { unit: 'DEPARTEMEN SENIORA HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '081918431357', name: 'Talitha', position: 'Ketua Departemen Seniora Himpunan Mahasiswa Kesehatan Masyarakat' },
+                    { unit: 'DEPARTEMEN SENIORA HIMPUNAN MAHASISWA KESEHATAN MASYARAKAT', phone: '081918431357', name: 'Talitha', position: 'Ketua Departemen Seni dan Olahraga Himpunan Mahasiswa Kesehatan Masyarakat' },
                     { unit: 'DEPARTEMEN NOTIF HIMPUNAN MAHASISWA PROGRAM STUDI KESELAMATAN DAN KESEHATAN KERJA', phone: '081932371915', name: 'Grinna', position: 'Ketua Departemen NOTIF Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja' },
                     { unit: 'PEMINATAN BIOSTATISTIKA DAN KEPENDUDUKAN', phone: '088225234055', name: 'Taat Wigati', position: 'Peminatan Biostatistika dan Kependudukan' },
                     { unit: 'BIDANG CED BEM FKM', phone: '089980232596', name: 'Sulthon', position: 'Ketua Bidang CED BEM FKM' }
@@ -121,15 +125,7 @@
 
             const generatedMessage = useMemo(() => {
                 if (!selectedPJ || !selectedContact || !message) return '';
-                return `Assalamualaikum Wr. Wb. Selamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Mohon maaf mengganggu waktunya.
-
-Perkenalkan kembali saya ${selectedPJ} selaku Staf Muda Bidang K&PSDM BEM FKM UNDIP 2026 yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM UNDIP dengan ${selectedContact.unit}.
-
-Maksud dan tujuan saya menghubungi Kak ${selectedContact.name} selaku ${selectedContact.position} adalah untuk ${message}
-
-Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${selectedContact.name}. Mohon maaf apabila terdapat kesalahan dalam penggunaan kata.
-
-Selamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Wassalamualaikum Wr. Wb.`;
+                return `Assalamualaikum Wr. Wb. Selamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Mohon maaf mengganggu waktunya.\n\nPerkenalkan kembali saya ${selectedPJ} selaku Staf Muda Bidang K&PSDM BEM FKM UNDIP 2026 yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM UNDIP dengan ${selectedContact.unit}.\n\nMaksud dan tujuan saya menghubungi Kak ${selectedContact.name} selaku ${selectedContact.position} adalah untuk ${message}\n\nSekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${selectedContact.name}. Mohon maaf apabila terdapat kesalahan dalam penggunaan kata.\n\nSelamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Wassalamualaikum Wr. Wb.`;
             }, [selectedPJ, selectedContact, timeOfDay, message]);
 
             const formatPhoneNumber = (phone) => {
@@ -151,187 +147,103 @@ Selamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Wassalamualaikum W
             };
 
             return (
-                <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-x-hidden">
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-                        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-                        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-                    </div>
-
-                    <div className="glass-header sticky top-0 z-50 backdrop-blur-2xl bg-white/60 border-b border-white/20 shadow-lg">
-                        <div className="max-w-7xl mx-auto px-6 py-5">
-                            <div className="flex items-center gap-5">
-                                <div className="glass-logo flex-shrink-0 rounded-3xl bg-white/90 backdrop-blur-xl border border-white/50 shadow-2xl p-2">
-                                    <img 
-                                        src="https://i.ibb.co/Q77x9w9/VdVjBHC.png"
-                                        alt="Logo PSDM BEM FKM UNDIP"
-                                        className="w-16 h-16 md:w-20 md:h-20 object-contain"
-                                    />
-                                </div>
-                                <div className="flex-1">
-                                    <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">
-                                        WEBSITE INTERCOM BIDANG K&PSDM
-                                    </h1>
-                                    <p className="text-base md:text-lg text-gray-700 font-semibold mt-1">
-                                        BEM FKM UNDIP 2026 - KABINET ARUNIKA
-                                    </p>
-                                </div>
+                <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-x-hidden pb-10">
+                    {/* Header */}
+                    <div className="glass-header sticky top-0 z-50 backdrop-blur-2xl bg-white/60 border-b border-white/20 shadow-lg p-5">
+                        <div className="max-w-7xl mx-auto flex items-center gap-5">
+                            <img src="https://i.ibb.co/Q77x9w9/VdVjBHC.png" className="w-16 h-16 object-contain" />
+                            <div>
+                                <h1 className="text-xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-pink-600 bg-clip-text text-transparent">
+                                    WEBSITE INTERCOM BIDANG K&PSDM
+                                </h1>
+                                <p className="text-sm text-gray-700 font-semibold">BEM FKM UNDIP 2026 - KABINET ARUNIKA</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="max-w-7xl mx-auto px-6 py-10 relative z-10">
-                        <div className="grid lg:grid-cols-2 gap-8">
-                            <div className="space-y-6">
-                                <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-7 border border-white/50 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02]">
-                                    <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-                                        Nama Pengirim
-                                    </h2>
-                                    <select
-                                        value={selectedPJ}
-                                        onChange={(e) => { setSelectedPJ(e.target.value); setSelectedContact(null); setSearchTerm(''); }}
-                                        className="glass-input w-full px-5 py-4 rounded-2xl backdrop-blur-xl bg-white/80 border-2 border-blue-200/50 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all duration-300 text-gray-800 font-semibold shadow-inner"
-                                    >
-                                        <option value="">Pilih nama pengirim...</option>
-                                        {Object.keys(contactData).map(pj => <option key={pj} value={pj}>{pj}</option>)}
-                                    </select>
+                    <div className="max-w-4xl mx-auto px-6 py-10 space-y-6 relative z-10">
+                        {/* Pilih Pengirim */}
+                        <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 border shadow-xl">
+                            <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-blue-500"></span> Pilih Nama Pengirim
+                            </h2>
+                            <select 
+                                value={selectedPJ}
+                                onChange={(e) => { setSelectedPJ(e.target.value); setSelectedContact(null); }}
+                                className="w-full p-4 rounded-2xl border-2 border-blue-100 outline-none focus:border-blue-500"
+                            >
+                                <option value="">-- Pilih Nama Kamu --</option>
+                                {Object.keys(contactData).map(name => <option key={name} value={name}>{name}</option>)}
+                            </select>
+                        </div>
+
+                        {selectedPJ && (
+                            <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 border shadow-xl">
+                                <h2 className="text-lg font-bold text-gray-800 mb-4">Cari Kontak Penerima</h2>
+                                <div className="relative mb-4">
+                                    <input 
+                                        type="text" 
+                                        placeholder="Cari unit atau nama..."
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        className="w-full p-4 pl-12 rounded-2xl border-2 border-blue-100"
+                                    />
+                                    <div className="absolute left-4 top-4 opacity-50"><LucideIcon name="Search" className="w-5 h-5" /></div>
                                 </div>
-
-                                {selectedPJ && (
-                                    <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-7 border border-white/50 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02]">
-                                        <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
-                                            <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
-                                            Nama Penerima
-                                        </h2>
-                                        <div className="relative mb-4 flex items-center">
-                                            <div className="absolute left-4"><Icon name="Search" className="w-5 h-5 text-blue-400" /></div>
-                                            <input
-                                                type="text"
-                                                placeholder="Cari kontak..."
-                                                value={searchTerm}
-                                                onChange={(e) => setSearchTerm(e.target.value)}
-                                                className="glass-input w-full pl-12 pr-5 py-4 rounded-2xl backdrop-blur-xl bg-white/80 border-2 border-blue-200/50 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all duration-300 text-gray-800 shadow-inner"
-                                            />
-                                        </div>
-                                        <div className="space-y-3 max-h-80 overflow-y-auto pr-2 custom-scrollbar">
-                                            {filteredContacts.map((contact, idx) => (
-                                                <button
-                                                    key={idx}
-                                                    onClick={() => setSelectedContact(contact)}
-                                                    className={`w-full text-left p-5 rounded-2xl transition-all duration-500 ${
-                                                        selectedContact?.phone === contact.phone
-                                                            ? 'glass-selected backdrop-blur-2xl bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-2xl scale-105 border border-white/30'
-                                                            : 'glass-item backdrop-blur-xl bg-white/60 hover:bg-white/80 text-gray-800 border border-white/40 hover:border-blue-300 hover:shadow-xl hover:scale-[1.02]'
-                                                    }`}
-                                                >
-                                                    <div className="font-bold text-sm uppercase">{contact.unit}</div>
-                                                    <div className={`text-xs mt-2 ${selectedContact?.phone === contact.phone ? 'text-white/90' : 'text-gray-600'}`}>
-                                                        {contact.name} • {contact.phone}
-                                                    </div>
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {selectedContact && (
-                                    <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-7 border border-white/50 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02]">
-                                        <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
-                                            <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse"></div>
-                                            Detail Pesan
-                                        </h2>
-                                        <div className="mb-6">
-                                            <label className="block text-sm font-bold text-gray-700 mb-3">Waktu Pengiriman</label>
-                                            <div className="grid grid-cols-4 gap-2">
-                                                {['pagi', 'siang', 'sore', 'malam'].map(time => (
-                                                    <button
-                                                        key={time}
-                                                        onClick={() => setTimeOfDay(time)}
-                                                        className={`py-3 px-3 rounded-2xl font-bold transition-all duration-500 text-sm ${
-                                                            timeOfDay === time
-                                                                ? 'glass-selected backdrop-blur-2xl bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-2xl scale-110 border border-white/30'
-                                                                : 'glass-button backdrop-blur-xl bg-white/60 hover:bg-white/80 text-gray-700 border border-white/40 hover:border-blue-300 hover:shadow-lg hover:scale-105'
-                                                        }`}
-                                                    >
-                                                        {time}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-gray-700 mb-3">Isi Pesan</label>
-                                            <textarea
-                                                value={message}
-                                                onChange={(e) => setMessage(e.target.value)}
-                                                placeholder="Tulis maksud dan tujuan menghubungi..."
-                                                className="glass-input w-full px-5 py-4 rounded-2xl backdrop-blur-xl bg-white/80 border-2 border-blue-200/50 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none h-44 resize-none transition-all duration-300 text-gray-800 shadow-inner"
-                                            />
-                                        </div>
-                                    </div>
-                                )}
+                                <div className="grid gap-3 max-h-64 overflow-y-auto pr-2">
+                                    {filteredContacts.map((contact, idx) => (
+                                        <button 
+                                            key={idx}
+                                            onClick={() => setSelectedContact(contact)}
+                                            className={`p-4 rounded-2xl text-left border transition ${selectedContact === contact ? 'bg-blue-600 text-white' : 'bg-white/50 hover:bg-blue-50'}`}
+                                        >
+                                            <div className="font-bold text-sm uppercase">{contact.unit}</div>
+                                            <div className="text-xs opacity-80">{contact.name}</div>
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
+                        )}
 
-                            <div className="space-y-6">
-                                {generatedMessage ? (
-                                    <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-7 border border-white/50 shadow-2xl sticky top-24">
-                                        <h2 className="text-xl font-bold text-gray-800 mb-5 flex items-center gap-2">
-                                            <Icon name="MessageSquare" className="w-6 h-6 text-blue-600" />
-                                            Preview Format Chat
-                                        </h2>
-                                        <div className="glass-info backdrop-blur-xl bg-gradient-to-br from-blue-50/80 to-purple-50/80 rounded-2xl p-5 mb-5 border border-blue-200/50 shadow-inner">
-                                            <div className="text-sm text-gray-800 mb-2"><strong className="text-blue-700">Kepada:</strong> {selectedContact.name}</div>
-                                            <div className="text-sm text-gray-800 mb-2"><strong className="text-blue-700">Unit:</strong> {selectedContact.unit}</div>
-                                            <div className="text-sm text-gray-800"><strong className="text-blue-700">Nomor:</strong> {selectedContact.phone}</div>
-                                        </div>
-                                        <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 mb-6 whitespace-pre-wrap text-sm text-gray-800 leading-relaxed max-h-96 overflow-y-auto border border-gray-200/50 custom-scrollbar shadow-inner">
+                        {selectedContact && (
+                            <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 border shadow-xl space-y-4">
+                                <h2 className="text-lg font-bold text-gray-800">Detail Pesan</h2>
+                                <div className="grid grid-cols-4 gap-2">
+                                    {['pagi', 'siang', 'sore', 'malam'].map(t => (
+                                        <button 
+                                            key={t}
+                                            onClick={() => setTimeOfDay(t)}
+                                            className={`p-3 rounded-xl font-bold capitalize transition ${timeOfDay === t ? 'bg-blue-600 text-white' : 'bg-white border'}`}
+                                        >
+                                            {t}
+                                        </button>
+                                    ))}
+                                </div>
+                                <textarea 
+                                    placeholder="Tulis maksud tujuan..."
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    className="w-full h-32 p-4 rounded-2xl border-2 border-blue-100 outline-none"
+                                />
+                                
+                                {generatedMessage && (
+                                    <div className="space-y-4">
+                                        <div className="p-4 bg-white/50 border rounded-2xl text-sm whitespace-pre-wrap leading-relaxed italic">
                                             {generatedMessage}
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
-                                            <button onClick={handleCopy} className="glass-button-action backdrop-blur-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-5 rounded-2xl font-bold hover:shadow-2xl transition-all duration-500 hover:scale-110 flex items-center justify-center gap-2 border border-white/30">
-                                                {copied ? <Icon name="Check" className="w-5 h-5" /> : <Icon name="Copy" className="w-5 h-5" />}
-                                                {copied ? 'Tersalin!' : 'Salin'}
+                                            <button onClick={handleCopy} className="p-4 rounded-2xl bg-slate-800 text-white font-bold flex items-center justify-center gap-2">
+                                                <LucideIcon name={copied ? "Check" : "Copy"} className="w-5 h-5" /> {copied ? 'Tersalin' : 'Salin'}
                                             </button>
-                                            <button onClick={handleSendWhatsApp} className="glass-button-action backdrop-blur-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-5 rounded-2xl font-bold hover:shadow-2xl transition-all duration-500 hover:scale-110 flex items-center justify-center gap-2 border border-white/30">
-                                                <Icon name="Send" className="w-5 h-5" />
-                                                Kirim WA
+                                            <button onClick={handleSendWhatsApp} className="p-4 rounded-2xl bg-green-600 text-white font-bold flex items-center justify-center gap-2">
+                                                <LucideIcon name="Send" className="w-5 h-5" /> Kirim WA
                                             </button>
                                         </div>
-                                    </div>
-                                ) : (
-                                    <div className="glass-card backdrop-blur-2xl bg-white/70 rounded-3xl p-20 border border-white/50 shadow-2xl text-center">
-                                        <div className="w-28 h-28 backdrop-blur-xl bg-gradient-to-br from-blue-100/80 to-purple-100/80 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl border border-white/40">
-                                            <Icon name="MessageSquare" className="w-14 h-14 text-blue-600" />
-                                        </div>
-                                        <p className="text-gray-600 font-semibold text-lg">Pilih pengirim dan penerima untuk generate format chat</p>
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        )}
                     </div>
-
-                    <div className="text-center py-10 px-4 relative z-10">
-                        <p className="text-gray-700 font-semibold text-sm">© 2026 — Designed & Developed by Program, Sinergitas, dan Informasi</p>
-                    </div>
-
-                    <style>{`
-                        @keyframes blob {
-                            0%, 100% { transform: translate(0, 0) scale(1); }
-                            33% { transform: translate(30px, -50px) scale(1.1); }
-                            66% { transform: translate(-20px, 20px) scale(0.9); }
-                        }
-                        .animate-blob { animation: blob 7s infinite; }
-                        .animation-delay-2000 { animation-delay: 2s; }
-                        .animation-delay-4000 { animation-delay: 4s; }
-                        .glass-card, .glass-button, .glass-item, .glass-input {
-                            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
-                        }
-                        .glass-selected {
-                            box-shadow: 0 20px 40px 0 rgba(59, 130, 246, 0.4);
-                        }
-                        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
-                        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
-                    `}</style>
                 </div>
             );
         };
