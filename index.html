@@ -32,7 +32,7 @@
              src="https://i.imgur.com/7cvCZVb.png"
              alt="Logo" loading="lazy" />
         <div class="text-left">
-          <!-- 1) Judul & subjudul yang diminta -->
+          <!-- Judul & subjudul yang diminta -->
           <h1 class="text-2xl font-bold">WEBSITE INTERCOM BIDANG K&PSDM</h1>
           <p class="text-sm text-purple-300">BEM FKM UNDIP 2026 - KABINET ARUNIKA</p>
         </div>
@@ -368,11 +368,11 @@
     // 3) & 4) Generate message rules:
     // - Paragraph 2: remove leading "Ketua " from unit display
     // - Paragraph "Maksud..." must include "selaku Ketua <unit>" (do not duplicate 'Ketua' if already present)
+    // - Additionally: for selectedStaff === 'jeo' include "Undip 2026" after the role phrase
     function stripLeadingKetua(unit) {
       return String(unit || '').replace(/^\s*Ketua\s+/i, '');
     }
     function ensureKetuaPrefix(unit) {
-      // if unit already starts with 'Ketua' (case-insensitive), return as-is
       if (/^\s*Ketua\s+/i.test(unit)) return unit;
       return 'Ketua ' + unit;
     }
@@ -385,9 +385,11 @@
       const unitPara2 = stripLeadingKetua(selectedContact.unit || '');
       // paragraph "Maksud..." must have "selaku Ketua <unit>" but avoid double 'Ketua'
       const unitForMaksud = ensureKetuaPrefix(selectedContact.unit || '');
+      // Special insertion for Jeo: add " Undip 2026" right after the role phrase
+      const jeoSuffix = (selectedStaff === 'jeo') ? ' Undip 2026' : '';
       return `Assalamualaikum Wr. Wb. Selamat ${greeting}, Kak ${selectedContact.nama}. Mohon maaf apabila mengganggu waktunya.
 
-Perkenalkan kembali saya ${staffName} selaku Staf Muda Bidang Keorganisasian dan Pengembangan Sumber Daya Manusia (K&PSDM) BEM FKM  yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM dengan ${unitPara2}.
+Perkenalkan kembali saya ${staffName} selaku Staf Muda Bidang Keorganisasian dan Pengembangan Sumber Daya Manusia (K&PSDM) BEM FKM${jeoSuffix} yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM dengan ${unitPara2}.
 
 Maksud dan tujuan saya menghubungi Kak ${selectedContact.nama} selaku ${unitForMaksud} 2026 adalah untuk ${tujuan}
 
@@ -395,11 +397,6 @@ Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${s
     }
 
     // 5) Normalize phone for wa.me link:
-    // - remove non-digits
-    // - if starts with '0' -> replace leading 0 with '62'
-    // - if starts with '62' -> ok
-    // - if starts with '8' -> prefix '62'
-    // - otherwise prefix '62'
     function normalizePhoneForWa(raw) {
       if (!raw) return '';
       const digits = String(raw).replace(/\D/g, '');
