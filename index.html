@@ -5,31 +5,20 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Intercom App — index.html</title>
 
-  <!-- Tailwind Play CDN for quick styling (suitable for prototype / GitHub Pages) -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    @keyframes fade-in {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slide-up {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slide-left {
-      from { opacity: 0; transform: translateX(20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
+    @keyframes fade-in { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slide-left { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
     .animate-fade-in { animation: fade-in 0.6s ease-out; }
     .animate-slide-up { animation: slide-up 0.4s ease-out; }
     .animate-slide-left { animation: slide-left 0.5s ease-out; }
     .animate-float { animation: float 3s ease-in-out infinite; }
     pre { white-space: pre-wrap; }
+    img.object-contain { object-fit: contain; }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-4 md:p-8">
@@ -37,14 +26,15 @@
     <!-- Header -->
     <div class="text-center mb-12 animate-fade-in">
       <div class="flex items-center justify-center gap-6 mb-4">
-        <!-- Gambar header: menggunakan Imgur direct link -->
+        <!-- Header image (object-contain sehingga tidak terpotong) -->
         <img id="headerImage"
-             class="w-20 h-20 rounded-full animate-float"
+             class="w-20 h-20 rounded-xl animate-float object-contain"
              src="https://i.imgur.com/7cvCZVb.png"
              alt="Logo" loading="lazy" />
         <div class="text-left">
-          <h1 class="text-2xl font-bold">Intercom K&PSDM — BEM FKM Undip 2026</h1>
-          <p class="text-sm text-purple-300">Kirim pesan WhatsApp cepat dan terformat</p>
+          <!-- 1) Judul & subjudul yang diminta -->
+          <h1 class="text-2xl font-bold">WEBSITE INTERCOM BIDANG K&PSDM</h1>
+          <p class="text-sm text-purple-300">BEM FKM UNDIP 2026 - KABINET ARUNIKA</p>
         </div>
       </div>
     </div>
@@ -55,7 +45,7 @@
         <!-- Select Staff -->
         <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 shadow-xl hover:shadow-purple-500/20 transition-all duration-300">
           <label class="flex items-center gap-2 text-lg font-semibold mb-3 text-purple-300">
-            <!-- simple inline user icon -->
+            <!-- inline user icon -->
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 21v-2a4 4 0 00-3-3.87M4 21v-2a4 4 0 013-3.87M16 3.13a4 4 0 010 7.75M8 3.13a4 4 0 010 7.75"></path></svg>
             Pengirim
           </label>
@@ -126,7 +116,7 @@
   </div>
 
   <script>
-    // -- Data (identik dengan source Anda) --
+    // Data (tetap sama)
     const STAFF_DATA = {
       evan: {
         name: 'Evan',
@@ -218,14 +208,9 @@
       }
     };
 
-    const GREETINGS = {
-      pagi: 'pagi',
-      siang: 'siang',
-      sore: 'sore',
-      malam: 'malam'
-    };
+    const GREETINGS = { pagi: 'pagi', siang: 'siang', sore: 'sore', malam: 'malam' };
 
-    // -- State --
+    // State
     let selectedStaff = '';
     let selectedContact = null;
     let waktu = 'pagi';
@@ -233,7 +218,7 @@
     let searchQuery = '';
     let copiedTimeout = null;
 
-    // -- Elements --
+    // Elements
     const staffSelect = document.getElementById('staffSelect');
     const searchBlock = document.getElementById('searchBlock');
     const searchInput = document.getElementById('searchInput');
@@ -250,9 +235,8 @@
     const sendBtn = document.getElementById('sendBtn');
     const headerImage = document.getElementById('headerImage');
 
-    // -- Initialize UI --
+    // Init
     function init() {
-      // populate staff options
       Object.entries(STAFF_DATA).forEach(([key, data]) => {
         const opt = document.createElement('option');
         opt.value = key;
@@ -260,7 +244,6 @@
         staffSelect.appendChild(opt);
       });
 
-      // waktu buttons
       Object.keys(GREETINGS).forEach(key => {
         const btn = document.createElement('button');
         btn.type = 'button';
@@ -274,19 +257,17 @@
         waktuButtons.appendChild(btn);
       });
 
-      // event listeners
       staffSelect.addEventListener('change', (e) => {
         selectedStaff = e.target.value;
         selectedContact = null;
         searchQuery = '';
         searchInput.value = '';
         copyBtnText.textContent = 'Salin Pesan';
-        // show/hide blocks
         searchBlock.classList.toggle('hidden', !selectedStaff);
         contactsBlock.classList.toggle('hidden', !selectedStaff);
         updateContacts();
-        waktuBlock.classList.toggle('hidden', true);
-        tujuanBlock.classList.toggle('hidden', true);
+        waktuBlock.classList.add('hidden');
+        tujuanBlock.classList.add('hidden');
         rightPanel.classList.add('hidden');
       });
 
@@ -310,7 +291,6 @@
           if (copiedTimeout) clearTimeout(copiedTimeout);
           copiedTimeout = setTimeout(() => { copyBtnText.textContent = 'Salin Pesan'; }, 2000);
         } catch (err) {
-          // fallback
           prompt('Salin pesan ini secara manual:', msg);
         }
       });
@@ -320,24 +300,19 @@
         const message = generateMessage();
         if (!message) return;
         const encodedMessage = encodeURIComponent(message);
-        const phone = selectedContact.phone.replace(/\D/g, '');
-        // open wa.me
+        const phone = normalizePhoneForWa(selectedContact.phone);
         window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');
       });
 
-      // optional: let user click header image to paste new src (URL or base64)
+      // klik headerImage untuk mengganti src (opsional)
       headerImage.addEventListener('click', () => {
         const newSrc = prompt('Tempel URL gambar atau data:image/... (base64). Kosongkan untuk menghapus:');
         if (newSrc === null) return;
-        if (newSrc.trim() === '') {
-          headerImage.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-        } else {
-          headerImage.src = newSrc.trim();
-        }
+        headerImage.src = newSrc.trim() === '' ? 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==' : newSrc.trim();
       });
     }
 
-    // -- Helpers --
+    // Helpers
     function getFilteredContacts() {
       if (!selectedStaff) return [];
       const contacts = STAFF_DATA[selectedStaff]?.contacts || [];
@@ -356,7 +331,7 @@
         contactsList.innerHTML = '<div class="text-sm text-gray-400">Tidak ada kontak.</div>';
         return;
       }
-      filtered.forEach((contact, idx) => {
+      filtered.forEach((contact) => {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = `w-full text-left p-4 rounded-xl transition-all duration-300 ${selectedContact?.phone === contact.phone ? 'bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg scale-105' : 'bg-slate-800/50 hover:bg-slate-700/50'}`;
@@ -368,9 +343,8 @@
         btn.addEventListener('click', () => {
           selectedContact = contact;
           tujuan = tujuanInput.value.trim();
-          // show waktu and tujuan blocks
-          waktuBlock.classList.toggle('hidden', false);
-          tujuanBlock.classList.toggle('hidden', false);
+          waktuBlock.classList.remove('hidden');
+          tujuanBlock.classList.remove('hidden');
           updateContacts();
           updateWaktuButtons();
           renderPreview();
@@ -391,18 +365,48 @@
       });
     }
 
+    // 3) & 4) Generate message rules:
+    // - Paragraph 2: remove leading "Ketua " from unit display
+    // - Paragraph "Maksud..." must include "selaku Ketua <unit>" (do not duplicate 'Ketua' if already present)
+    function stripLeadingKetua(unit) {
+      return String(unit || '').replace(/^\s*Ketua\s+/i, '');
+    }
+    function ensureKetuaPrefix(unit) {
+      // if unit already starts with 'Ketua' (case-insensitive), return as-is
+      if (/^\s*Ketua\s+/i.test(unit)) return unit;
+      return 'Ketua ' + unit;
+    }
+
     function generateMessage() {
       if (!selectedContact || !tujuan.trim()) return '';
       const staffName = STAFF_DATA[selectedStaff]?.name || '';
       const greeting = GREETINGS[waktu] || GREETINGS.pagi;
-      const unitForParagraph2 = (selectedContact.unit || '').replace(/^Ketua\s+/i, '');
+      // paragraph 2: unit without 'Ketua' at start
+      const unitPara2 = stripLeadingKetua(selectedContact.unit || '');
+      // paragraph "Maksud..." must have "selaku Ketua <unit>" but avoid double 'Ketua'
+      const unitForMaksud = ensureKetuaPrefix(selectedContact.unit || '');
       return `Assalamualaikum Wr. Wb. Selamat ${greeting}, Kak ${selectedContact.nama}. Mohon maaf apabila mengganggu waktunya.
 
-Perkenalkan kembali saya ${staffName} selaku Staf Muda Bidang Keorganisasian dan Pengembangan Sumber Daya Manusia (K&PSDM) BEM FKM Undip 2026 yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM Undip dengan ${unitForParagraph2}.
+Perkenalkan kembali saya ${staffName} selaku Staf Muda Bidang Keorganisasian dan Pengembangan Sumber Daya Manusia (K&PSDM) BEM FKM  yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM dengan ${unitPara2}.
 
-Maksud dan tujuan saya menghubungi Kak ${selectedContact.nama} selaku ${selectedContact.unit} 2026 adalah untuk ${tujuan}
+Maksud dan tujuan saya menghubungi Kak ${selectedContact.nama} selaku ${unitForMaksud} 2026 adalah untuk ${tujuan}
 
 Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${selectedContact.nama}. Mohon maaf apabila terdapat kesalahan dalam penggunaan kata. Selamat ${greeting}, Kak ${selectedContact.nama}. Wassalamualaikum Wr. Wb.`;
+    }
+
+    // 5) Normalize phone for wa.me link:
+    // - remove non-digits
+    // - if starts with '0' -> replace leading 0 with '62'
+    // - if starts with '62' -> ok
+    // - if starts with '8' -> prefix '62'
+    // - otherwise prefix '62'
+    function normalizePhoneForWa(raw) {
+      if (!raw) return '';
+      const digits = String(raw).replace(/\D/g, '');
+      if (digits.startsWith('62')) return digits;
+      if (digits.startsWith('0')) return digits.replace(/^0+/, '62');
+      if (digits.startsWith('8')) return '62' + digits;
+      return '62' + digits;
     }
 
     function renderPreview() {
@@ -427,7 +431,6 @@ Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${s
         .replace(/>/g, '&gt;');
     }
 
-    // init app
     init();
   </script>
 </body>
