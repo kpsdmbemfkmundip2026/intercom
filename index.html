@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WEBSITE INTERCOM BEM FKM UNDIP 2026</title>
-    
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <title>WEBSITE INTERCOM BIDANG K&PSDM</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -15,10 +14,11 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // --- KODINGAN ASLI KAMU MULAI DARI SINI ---
-        const { useState, useMemo } = React;
+        // Mendefinisikan Icon Lucide agar bisa terbaca di browser
         const { Search, Send, Copy, Check, MessageSquare } = lucide;
+        const { useState, useMemo } = React;
 
+        // --- KODE ASLI KAMU MULAI DARI SINI ---
         const App = () => {
           const [selectedPJ, setSelectedPJ] = useState('');
           const [selectedContact, setSelectedContact] = useState(null);
@@ -350,10 +350,10 @@ Selamat ${greetings[timeOfDay]}, Kak ${selectedContact.name}. Wassalamualaikum W
             </div>
           );
         };
+        // --- KODE ASLI KAMU BERAKHIR DI SINI ---
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
-        // --- KODINGAN ASLI KAMU BERAKHIR DI SINI ---
     </script>
 </body>
 </html>
