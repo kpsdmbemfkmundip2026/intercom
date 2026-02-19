@@ -69,6 +69,18 @@
           <div id="contactsList" class="space-y-2"></div>
         </div>
 
+        <!-- Format Chat Selection -->
+        <div id="formatBlock" class="hidden bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 shadow-xl animate-slide-up">
+          <label class="flex items-center gap-2 text-lg font-semibold mb-3 text-purple-300">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Format Chat
+          </label>
+          <select id="formatSelect" class="w-full bg-slate-800/50 border border-purple-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all">
+            <option value="keperluan">Keperluan</option>
+            <option value="perkenalan">Perkenalan</option>
+          </select>
+        </div>
+
         <!-- Time Selection -->
         <div id="waktuBlock" class="hidden bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 shadow-xl animate-slide-up">
           <label class="flex items-center gap-2 text-lg font-semibold mb-3 text-purple-300">
@@ -121,13 +133,13 @@
       evan: {
         name: 'Evandra Ramadhan Azriel Sanyoto',
         contacts: [
-          { nama: 'Fikhar', unit: 'Ketua BEM FKM', phone: '082116796008' },
+          { nama: 'Fikhar', unit: 'Ketua BEM FKM Undip', phone: '082116796008' },
           { nama: 'Ilham', unit: 'Ketua Himpunan Mahasiswa Kesehatan Masyarakat', phone: '089539714525' },
           { nama: 'Jey', unit: 'Departemen PPI Himpunan Mahasiswa Kesehatan Masyarakat', phone: '0811128644' },
           { nama: 'Farah', unit: 'Departemen PI Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '082137753469' },
           { nama: 'Maharani', unit: 'Ketua Peminatan Kesehatan Lingkungan', phone: '08139340970' },
-          { nama: 'Alifah', unit: 'Biro KMI BEM FKM', phone: '08117671202' },
-          { nama: 'Deny', unit: 'Bidang K&PENGMAS BEM FKM', phone: '08112618995' }
+          { nama: 'Alifah', unit: 'Biro KMI BEM FKM Undip', phone: '08117671202' },
+          { nama: 'Deny', unit: 'Bidang K&PENGMAS BEM FKM Undip', phone: '08112618995' }
         ]
       },
       jeo: {
@@ -135,10 +147,10 @@
         contacts: [
           { nama: 'Karen', unit: 'PSM FKM', phone: '08121411801' },
           { nama: 'Syakira', unit: 'Departemen Keilmuan Himpunan Mahasiswa Kesehatan Masyarakat', phone: '085769569991' },
-          { nama: 'Fibri', unit: 'Departemen Medinfo Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '081325740363' },
+          { nama: 'Fibri', unit: 'Departemen MEDINFO Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '081325740363' },
           { nama: 'Husain', unit: 'Peminatan K3', phone: '087722460391' },
-          { nama: 'Milda', unit: 'Biro Admin BEM FKM', phone: '081332334398' },
-          { nama: 'Jihan', unit: 'Bidang Mikat BEM FKM', phone: '088215109680' }
+          { nama: 'Milda', unit: 'Biro Admin BEM FKM Undip', phone: '081332334398' },
+          { nama: 'Jihan', unit: 'Bidang MIKAT BEM FKM Undip', phone: '088215109680' }
         ]
       },
       lily: {
@@ -150,20 +162,20 @@
           { nama: 'Shifa', unit: 'Departemen PSDM Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '081390240726' },
           { nama: 'Salwa Audrie', unit: 'Peminatan Epidemiologi', phone: '089521897115' },
           { nama: 'Surya Natanegara', unit: 'Peminatan Entomologi', phone: '085718921051' },
-          { nama: 'Maulida', unit: 'Bidang Riskel BEM FKM', phone: '085877335371' },
-          { nama: 'Darin', unit: 'Bidang Ekotif BEM FKM', phone: '089669129858' }
+          { nama: 'Maulida', unit: 'Bidang RISKEL BEM FKM Undip', phone: '085877335371' },
+          { nama: 'Darin', unit: 'Bidang EKOTIF BEM FKM Undip', phone: '089669129858' }
         ]
       },
       wawa: {
         name: 'Aulia Zahwa Fachrina',
         contacts: [
-          { nama: 'Naila', unit: 'Senat', phone: '082110063943' },
+          { nama: 'Naila', unit: 'Senat Mahasiswa FKM Undip', phone: '082110063943' },
           { nama: 'Arina', unit: 'Departemen PSDM Himpunan Mahasiswa Kesehatan Masyarakat', phone: '087782951049' },
-          { nama: 'Ruth', unit: 'Departemen Tipemu Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '085271024742' },
+          { nama: 'Ruth', unit: 'Departemen TIPEMU Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '085271024742' },
           { nama: 'Rayung', unit: 'Peminatan PKIP', phone: '087839475453' },
           { nama: 'Ghifari', unit: 'Komting 2025', phone: '081918481223' },
-          { nama: 'Ghani', unit: 'Bidang Sospol BEM FKM', phone: '087885156165' },
-          { nama: 'Daffa', unit: 'Bidang Harkam BEM FKM', phone: '082134809481' }
+          { nama: 'Ghani', unit: 'Bidang SOSPOL BEM FKM Undip', phone: '087885156165' },
+          { nama: 'Daffa', unit: 'Bidang HARKAM BEM FKM Undip', phone: '082134809481' }
         ]
       },
       aru: {
@@ -171,39 +183,39 @@
         contacts: [
           { nama: 'Sera', unit: 'Studio8', phone: '087889808483' },
           { nama: 'Dita', unit: 'Departemen KMI Himpunan Mahasiswa Kesehatan Masyarakat', phone: '085712724984' },
-          { nama: 'Alma', unit: 'Departemen Pengmas Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '085210586748' },
+          { nama: 'Alma', unit: 'Departemen PENGMAS Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '085210586748' },
           { nama: 'Nazwa', unit: 'Peminatan AKK', phone: '08113978978' },
-          { nama: 'Bima', unit: 'Bidang Kestra BEM FKM', phone: '081229801055' }
+          { nama: 'Bima', unit: 'Bidang KESTRA BEM FKM Undip', phone: '081229801055' }
         ]
       },
       faiza: {
         name: 'Faiza Salihamida Aziza',
         contacts: [
           { nama: 'Andi', unit: 'Ketua Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '085884781730' },
-          { nama: 'Deswita', unit: 'Departemen Sosmas Himpunan Mahasiswa Kesehatan Masyarakat', phone: '087810076394' },
-          { nama: 'Winda', unit: 'Departemen Seniora Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '089601418488' },
+          { nama: 'Deswita', unit: 'Departemen SOSMAS Himpunan Mahasiswa Kesehatan Masyarakat', phone: '087810076394' },
+          { nama: 'Winda', unit: 'Departemen SENIORA Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '089601418488' },
           { nama: 'Syahfitri', unit: 'Peminatan Gizi Kesmas', phone: '085716738931' },
-          { nama: 'Mutia', unit: 'Pokja ISMKMI BEM FKM', phone: '081297220219' }
+          { nama: 'Mutia', unit: 'Pokja ISMKMI BEM FKM Undip', phone: '081297220219' }
         ]
       },
       ian: {
         name: 'Raffy Putra Ardiansyah',
         contacts: [
           { nama: 'Dinda', unit: 'KSR', phone: '085727583052' },
-          { nama: 'Talitha', unit: 'Departemen Seniora Himpunan Mahasiswa Kesehatan Masyarakat', phone: '081918431357' },
-          { nama: 'Grinna', unit: 'Departemen Notif Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '081932371915' },
+          { nama: 'Talitha', unit: 'Departemen SENIORA Himpunan Mahasiswa Kesehatan Masyarakat', phone: '081918431357' },
+          { nama: 'Grinna', unit: 'Departemen NOTIF Himpunan Mahasiswa Program Studi Keselamatan dan Kesehatan Kerja', phone: '081932371915' },
           { nama: 'Taat Wigati', unit: 'Peminatan Biostatistika & Kependudukan', phone: '088225234055' },
-          { nama: 'Sulthon', unit: 'Bidang CED BEM FKM', phone: '089980232596' }
+          { nama: 'Sulthon', unit: 'Bidang CED BEM FKM Undip', phone: '089980232596' }
         ]
       },
       kattari: {
         name: 'Alifia Safira Adekattari',
         contacts: [
           { nama: 'Muna', unit: 'Departemen Kewirausahaan Himpunan Mahasiswa Kesehatan Masyarakat', phone: '085713187074' },
-          { nama: 'Zahirah', unit: 'Penwa', phone: '082138316959' },
+          { nama: 'Zahirah', unit: 'PENWA', phone: '082138316959' },
           { nama: 'Grestine', unit: 'Komting 2023', phone: '085881797522' },
           { nama: 'Andreas', unit: 'Komting 2024', phone: '085695572360' },
-          { nama: 'Neibila', unit: 'Bidang Kesma BEM FKM', phone: '081228935025' }
+          { nama: 'Neibila', unit: 'Bidang KESMAS BEM FKM Undip', phone: '081228935025' }
         ]
       }
     };
@@ -216,6 +228,7 @@
     let waktu = 'pagi';
     let tujuan = '';
     let searchQuery = '';
+    let formatChat = 'keperluan';
     let copiedTimeout = null;
 
     // Elements
@@ -224,6 +237,8 @@
     const searchInput = document.getElementById('searchInput');
     const contactsBlock = document.getElementById('contactsBlock');
     const contactsList = document.getElementById('contactsList');
+    const formatBlock = document.getElementById('formatBlock');
+    const formatSelect = document.getElementById('formatSelect');
     const waktuBlock = document.getElementById('waktuBlock');
     const waktuButtons = document.getElementById('waktuButtons');
     const tujuanBlock = document.getElementById('tujuanBlock');
@@ -265,15 +280,22 @@
         copyBtnText.textContent = 'Salin Pesan';
         searchBlock.classList.toggle('hidden', !selectedStaff);
         contactsBlock.classList.toggle('hidden', !selectedStaff);
-        updateContacts();
+        formatBlock.classList.add('hidden');
         waktuBlock.classList.add('hidden');
         tujuanBlock.classList.add('hidden');
         rightPanel.classList.add('hidden');
+        updateContacts();
       });
 
       searchInput.addEventListener('input', (e) => {
         searchQuery = e.target.value.trim();
         updateContacts();
+      });
+
+      formatSelect.addEventListener('change', (e) => {
+        formatChat = e.target.value;
+        renderPreview();
+        checkRightPanelVisibility();
       });
 
       tujuanInput.addEventListener('input', (e) => {
@@ -343,6 +365,7 @@
         btn.addEventListener('click', () => {
           selectedContact = contact;
           tujuan = tujuanInput.value.trim();
+          formatBlock.classList.remove('hidden');
           waktuBlock.classList.remove('hidden');
           tujuanBlock.classList.remove('hidden');
           updateContacts();
@@ -365,28 +388,41 @@
       });
     }
 
-    // 3) & 4) Generate message rules:
-    // - Paragraph 2: remove leading "Ketua " from unit display
-    // - Paragraph "Maksud..." must include "selaku Ketua <unit>" (do not duplicate 'Ketua' if already present)
-    // - Additionally: for selectedStaff === 'jeo' include "Undip 2026" after the role phrase
+    // Helper functions untuk parsing unit
     function stripLeadingKetua(unit) {
       return String(unit || '').replace(/^\s*Ketua\s+/i, '');
     }
+
     function ensureKetuaPrefix(unit) {
       if (/^\s*Ketua\s+/i.test(unit)) return unit;
       return 'Ketua ' + unit;
     }
 
-    function generateMessage() {
+    function extractUnitType(unit) {
+      const unitStr = String(unit || '').toLowerCase();
+      if (unitStr.includes('departemen')) {
+        return stripLeadingKetua(unit);
+      } else if (unitStr.includes('peminatan')) {
+        return stripLeadingKetua(unit);
+      } else if (unitStr.includes('bidang')) {
+        return stripLeadingKetua(unit);
+      } else if (unitStr.includes('biro')) {
+        return stripLeadingKetua(unit);
+      } else if (unitStr.includes('ketua')) {
+        return stripLeadingKetua(unit);
+      } else {
+        return unit;
+      }
+    }
+
+    function generateMessageKeperluan() {
       if (!selectedContact || !tujuan.trim()) return '';
       const staffName = STAFF_DATA[selectedStaff]?.name || '';
       const greeting = GREETINGS[waktu] || GREETINGS.pagi;
-      // paragraph 2: unit without 'Ketua' at start
       const unitPara2 = stripLeadingKetua(selectedContact.unit || '');
-      // paragraph "Maksud..." must have "selaku Ketua <unit>" but avoid double 'Ketua'
       const unitForMaksud = ensureKetuaPrefix(selectedContact.unit || '');
-      // Special insertion for Jeo: add " Undip 2026" right after the role phrase
       const jeoSuffix = (selectedStaff === 'jeo') ? ' Undip 2026' : '';
+      
       return `Assalamualaikum Wr. Wb. Selamat ${greeting}, Kak ${selectedContact.nama}. Mohon maaf apabila mengganggu waktunya.
 
 Perkenalkan kembali saya ${staffName} selaku Staf Muda Bidang Keorganisasian dan Pengembangan Sumber Daya Manusia (K&PSDM) BEM FKM${jeoSuffix} yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM dengan ${unitPara2}.
@@ -396,7 +432,37 @@ Maksud dan tujuan saya menghubungi Kak ${selectedContact.nama} selaku ${unitForM
 Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${selectedContact.nama}. Mohon maaf apabila terdapat kesalahan dalam penggunaan kata. Selamat ${greeting}, Kak ${selectedContact.nama}. Wassalamualaikum Wr. Wb.`;
     }
 
-    // 5) Normalize phone for wa.me link:
+    function generateMessagePerkenalan() {
+      if (!selectedContact) return '';
+      const staffName = STAFF_DATA[selectedStaff]?.name || '';
+      const greeting = GREETINGS[waktu] || GREETINGS.pagi;
+      const unitExtracted = extractUnitType(selectedContact.unit || '');
+      
+      return `Assalamualaikum Wr. Wb. Selamat ${greeting}, Kak ${selectedContact.nama}. Mohon maaf mengganggu waktunya.
+
+Perkenalkan saya ${staffName} selaku Staf Muda Bidang K&PSDM BEM FKM Undip 2026 yang merupakan perwakilan Intercom Bidang K&PSDM BEM FKM Undip 2026 dengan ${unitExtracted}. Sebelumnya, saya mendapatkan nomor Kak ${selectedContact.nama} dari Ketua Bidang K&PSDM BEM FKM Undip 2026.
+
+Maksud dan tujuan saya menghubungi Kak ${selectedContact.nama} selaku ${ensureKetuaPrefix(selectedContact.unit || '')} adalah untuk memperkenalkan diri sebagai Intercom Bidang K&PSDM dengan ${unitExtracted}.
+
+Intercom merupakan sebuah jaringan komunikasi atau narahubung antara Bidang K&PSDM BEM FKM Undip dengan lembaga atau UKM-F di FKM Undip yang berkaitan dengan kaderisasi. Tujuan dari Intercom yaitu menjaga hubungan yang baik dan memudahkan penyebaran informasi serta perkembangan terkait kaderisasi di FKM Undip. Semoga untuk ke depannya, komunikasi melalui Intercom antara Bidang K&PSDM BEM FKM Undip dengan ${unitExtracted} dapat berjalan dengan baik dan tanpa kendala.
+
+Oleh karena itu, apakah Kak ${selectedContact.nama} berkenan melakukan Intercom dengan Bidang K&PSDM BEM FKM Undip 2026?
+
+Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian Kak ${selectedContact.nama}, mohon maaf apabila terdapat kesalahan dalam penggunaan kata.
+
+Selamat ${greeting}, Kak ${selectedContact.nama}.
+Wassalamualaikum Wr. Wb.`;
+    }
+
+    function generateMessage() {
+      if (formatChat === 'perkenalan') {
+        return generateMessagePerkenalan();
+      } else {
+        return generateMessageKeperluan();
+      }
+    }
+
+    // Normalize phone for wa.me link:
     function normalizePhoneForWa(raw) {
       if (!raw) return '';
       const digits = String(raw).replace(/\D/g, '');
@@ -411,8 +477,14 @@ Sekian informasi yang dapat saya sampaikan. Terima kasih atas perhatian, Kak ${s
     }
 
     function checkRightPanelVisibility() {
-      if (selectedContact && tujuan.trim()) {
-        rightPanel.classList.remove('hidden');
+      if (selectedContact) {
+        if (formatChat === 'perkenalan') {
+          rightPanel.classList.remove('hidden');
+        } else if (formatChat === 'keperluan' && tujuan.trim()) {
+          rightPanel.classList.remove('hidden');
+        } else {
+          rightPanel.classList.add('hidden');
+        }
       } else {
         rightPanel.classList.add('hidden');
       }
